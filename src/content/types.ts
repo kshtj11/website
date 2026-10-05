@@ -8,6 +8,9 @@ export type Media = {
   src?: string;
   alt?: string;
   caption?: string;
+  /** Pixel size (from pic()); when set, the box uses the image's own ratio */
+  width?: number;
+  height?: number;
 };
 
 /** An image whose pixel size is known, so its box can be reserved before it loads. */
@@ -19,10 +22,11 @@ export type Block =
   | { type: "sectionTitle"; number?: string; title: string; subtitle?: string }
   /** Heading on the left, paragraphs on the right (stacks on mobile) */
   | { type: "text"; heading?: string; body: string[] }
-  /** One image. size: small 400px · medium 600px · large 800px · full = edge of the 800px column */
-  | ({ type: "image"; size?: "small" | "medium" | "large" | "full"; aspect?: string } & Media)
-  /** Grid of images, 2–4 columns on desktop, 2 on mobile */
-  | { type: "gallery"; columns?: 2 | 3 | 4; images: Media[]; aspect?: string }
+  /** One image. size: small 400px · medium 600px · large 800px · full = edge of the 800px column ·
+   *  wide = breaks out of the column to 1100px (documentation shots) */
+  | ({ type: "image"; size?: "small" | "medium" | "large" | "full" | "wide"; aspect?: string } & Media)
+  /** Grid of images, 2–4 columns on desktop, 2 on mobile. wide = 1100px instead of the 800px column */
+  | { type: "gallery"; columns?: 2 | 3 | 4; images: Media[]; aspect?: string; wide?: boolean }
   /** Copy beside an image */
   | { type: "twoColumn"; heading?: string; body: string[]; image: Media; imageSide?: "left" | "right" }
   /** Pull quote / testimonial */
@@ -62,6 +66,9 @@ export type Project = {
   /** Images shown stacked in the preview popup after the facts row. Filled automatically
    *  from media-src/projects/<slug>/ by `npm run images`; set by hand only to override. */
   images?: SizedImage[];
+  /** "stack" (default) shows images as a seamless Behance-style stack under the case-study hero;
+   *  "blocks" skips it because the case study places images itself via blocks. */
+  caseStudyImages?: "stack" | "blocks";
   /** Case study body. Empty/omitted = popup only shows the summary. */
   blocks?: Block[];
   /** Hide from the grid without deleting */

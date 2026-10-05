@@ -44,7 +44,7 @@ export default function CaseStudyPage({ project }: { project: Project }) {
       <CaseStudyHeader sectionLabel={sectionLabel} sectionHref={sectionHref} title={project.title} />
       <main className="mx-auto flex w-full max-w-[800px] flex-col pb-16">
         <CaseStudyHero project={project} />
-        {project.images?.length ? (
+        {project.images?.length && project.caseStudyImages !== "blocks" ? (
           // Same pipeline images as the popup, so mobile (which skips the popup) sees them too.
           // Seamless stack (see PreviewModal): no gaps between slices, rounded outer corners only.
           <div className="w-full px-8 pb-10">

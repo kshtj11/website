@@ -1,7 +1,9 @@
-// Image pipeline: media-src/projects/<slug>/* → public/projects/<slug>/*.webp (GIFs copied as-is) + src/content/media.generated.json
+// Image pipeline: media-src/{projects,experiments}/<folder>/* → public/projects/<slug>/*.webp (GIFs copied as-is)
+//                 + src/content/media.generated.json
 //
-//   media-src/projects/ek-time/cover.png   → card + popup cover
-//   media-src/projects/ek-time/01.png …    → shown in order in the preview popup (natural sort)
+//   media-src/projects/ek-time/cover.png        → card + popup cover
+//   media-src/projects/ek-time/01.png …         → shown in order in the preview popup (natural sort)
+//   media-src/experiments/glazed tiles/*.png    → slug "glazed-tiles" (folder names are slugified)
 //
 // Originals stay out of git (media-src/ is ignored); the optimized WebP files and the manifest are committed.
 // When media-src/ is missing (e.g. on CI) the script leaves existing output untouched.
@@ -10,18 +12,19 @@ import { copyFile, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises"
 import path from "node:path";
 import sharp from "sharp";
 
-const SRC = "media-src/projects";
+const SRC_ROOTS = ["media-src/projects", "media-src/experiments"];
 const OUT = "public/projects";
 const MANIFEST = "src/content/media.generated.json";
 const MAX_WIDTH = 2800; // keep Behance-retina exports at full resolution
 const QUALITY = 92; // high quality; with smartSubsample below, colour edges + small text stay crisp
 const INPUT = /\.(png|jpe?g|webp|avif|tiff?|gif)$/i;
 
-if (!existsSync(SRC)) {
-  console.log(`process-images: no ${SRC}/ folder, keeping existing ${MANIFEST}`);
+if (!SRC_ROOTS.some((r) => existsSync(r))) {
+  console.log(`process-images: no media-src/ folders, keeping existing ${MANIFEST}`);
   process.exit(0);
 }
 
+const slugify = (s) => s.toLowerCase().trim().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
 const natural = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
 const manifest = {};
 let written = 0;
@@ -41,9 +44,14 @@ async function entryFromOutput(slug) {
   return entry.cover || entry.images.length ? entry : null;
 }
 
-const slugs = new Set([...(await readdir(SRC)), ...(existsSync(OUT) ? await readdir(OUT) : [])]);
+// slug → source folder, across every root ("glazed tiles" → "glazed-tiles").
+const srcDirs = new Map();
+for (const root of SRC_ROOTS.filter((r) => existsSync(r))) {
+  for (const folder of await readdir(root)) srcDirs.set(slugify(folder), path.join(root, folder));
+}
+const slugs = new Set([...srcDirs.keys(), ...(existsSync(OUT) ? await readdir(OUT) : [])]);
 for (const slug of [...slugs].sort(natural.compare)) {
-  const srcDir = path.join(SRC, slug);
+  const srcDir = srcDirs.get(slug) ?? "";
   const files =
     existsSync(srcDir) && (await stat(srcDir)).isDirectory()
       ? (await readdir(srcDir)).filter((f) => INPUT.test(f)).sort(natural.compare)

@@ -234,6 +234,61 @@
       }
     ]
   },
+  "glazed-tiles": {
+    "cover": null,
+    "images": [
+      {
+        "src": "/projects/glazed-tiles/frame-28.webp",
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "src": "/projects/glazed-tiles/frame-33.webp",
+        "width": 1208,
+        "height": 1208
+      },
+      {
+        "src": "/projects/glazed-tiles/frame-37.webp",
+        "width": 1200,
+        "height": 1200
+      },
+      {
+        "src": "/projects/glazed-tiles/frame-39.webp",
+        "width": 1200,
+        "height": 1200
+      },
+      {
+        "src": "/projects/glazed-tiles/glaze-type-hi.gif",
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "src": "/projects/glazed-tiles/image-29.webp",
+        "width": 1200,
+        "height": 1200
+      },
+      {
+        "src": "/projects/glazed-tiles/image-66.webp",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "src": "/projects/glazed-tiles/image-67.webp",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "src": "/projects/glazed-tiles/image-70.webp",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "src": "/projects/glazed-tiles/namaste.gif",
+        "width": 1156,
+        "height": 702
+      }
+    ]
+  },
   "old-man-and-the-sea": {
     "cover": {
       "src": "/projects/old-man-and-the-sea/cover.webp",

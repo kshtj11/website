@@ -1,8 +1,10 @@
+import { pic } from "./media";
+
 /**
  * PLAY PAGE — sidebar + sectioned masonry gallery (same hierarchy as the reference's Art page).
  *
  *   Sidebar group  ("Experiments")           ← collapsible, expands while one of its sections is on screen
- *     └ Section    ("Tiles Tool"  6)         ← a header row + a gallery of pieces; count = pieces.length
+ *     └ Section    ("Glazed Tiles" 10)       ← a header row + a gallery of pieces; count = pieces.length
  *         └ Piece  (one image + caption)     ← click opens the lightbox
  *
  * A group with a single section and no label of its own renders as a flat sidebar item.
@@ -38,6 +40,12 @@ export type PlayGroup = {
   sections: PlaySection[];
 };
 
+/** A real piece from the image pipeline (sized automatically, GIFs stay animated). */
+function piece(slug: string, file: string, title: string, meta?: string): PlayPiece {
+  const img = pic(slug, file, title);
+  return { src: img.src, title, meta, aspect: img.width / img.height };
+}
+
 /** Placeholder pieces with a mix of aspect ratios so the masonry is visible. */
 function placeholders(n: number, title = "Untitled"): PlayPiece[] {
   const aspects = [0.8, 1.25, 1, 0.75, 1.5, 0.8];
@@ -54,16 +62,21 @@ export const playGroups: PlayGroup[] = [
     label: "Experiments",
     sections: [
       {
-        id: "ixt",
-        label: "IxT Project",
-        action: { label: "Case study", href: "/play/ixt/" },
-        pieces: placeholders(5, "IxT"),
-      },
-      {
-        id: "tiles-tool",
-        label: "Tiles Tool",
-        action: { label: "Case study", href: "/play/tiles-tool/" },
-        pieces: placeholders(9, "Tile"),
+        id: "glazed-tiles",
+        label: "Glazed Tiles",
+        action: { label: "Case study", href: "/play/glazed-tiles/" },
+        pieces: [
+          piece("glazed-tiles", "glaze-type-hi.gif", "hi", "type, animated"),
+          piece("glazed-tiles", "image 29.png", "S.T.D. P.C.O. I.S.D.", "quadtree"),
+          piece("glazed-tiles", "Frame 28.png", "I love glazing", "type"),
+          piece("glazed-tiles", "namaste.gif", "नमस्ते", "GIF"),
+          piece("glazed-tiles", "image 66.png", "Devanagari", "image"),
+          piece("glazed-tiles", "Frame 33.png", "honk", "type"),
+          piece("glazed-tiles", "image 67.png", "Framed scene", "image"),
+          piece("glazed-tiles", "Frame 37.png", "serif", "type"),
+          piece("glazed-tiles", "image 70.png", "Letterform", "border"),
+          piece("glazed-tiles", "Frame 39.png", "A painting, re-tiled", "image"),
+        ],
       },
       {
         id: "fractal-visualizer",

@@ -16,7 +16,11 @@ const IMAGE_WIDTH = {
   medium: "max-w-[600px]",
   large: "max-w-[800px]",
   full: "max-w-none",
+  wide: "max-w-none",
 } as const;
+
+/** Breaks out of the 800px reading column to 1100px (never wider than the window minus 24px gutters). */
+const WIDE = "relative left-1/2 w-[min(1100px,calc(100vw-48px))] -translate-x-1/2";
 
 function Caption({ text }: { text?: string }) {
   if (!text) return null;
@@ -26,7 +30,13 @@ function Caption({ text }: { text?: string }) {
 function Figure({ media, aspect, className }: { media: Media; aspect?: string; className?: string }) {
   return (
     <figure className={clsx("w-full", className)}>
-      <MediaFrame src={media.src} alt={media.alt} aspect={aspect ?? "16/10"} placeholderLabel={media.src ? undefined : media.caption ?? "image"} />
+      <MediaFrame
+        src={media.src}
+        alt={media.alt}
+        // Real pixel size wins, so documentation images keep their own ratio.
+        aspect={media.width && media.height ? `${media.width}/${media.height}` : aspect ?? "16/10"}
+        placeholderLabel={media.src ? undefined : media.caption ?? "image"}
+      />
       <Caption text={media.src ? media.caption : undefined} />
     </figure>
   );
@@ -73,7 +83,7 @@ function BlockView({ block }: { block: Block }) {
 
     case "image":
       return (
-        <ScrollReveal className="flex w-full flex-col items-center px-8 py-10">
+        <ScrollReveal className={clsx("flex flex-col items-center py-10", block.size === "wide" ? WIDE : "w-full px-8")}>
           <Figure media={block} aspect={block.aspect} className={IMAGE_WIDTH[block.size ?? "large"]} />
         </ScrollReveal>
       );
@@ -81,7 +91,7 @@ function BlockView({ block }: { block: Block }) {
     case "gallery": {
       const cols = { 2: "md:grid-cols-2", 3: "md:grid-cols-3", 4: "md:grid-cols-4" }[block.columns ?? 3];
       return (
-        <div className={clsx("grid w-full grid-cols-2 gap-4 px-8 py-10", cols)}>
+        <div className={clsx("grid grid-cols-2 gap-4 py-10", cols, block.wide ? WIDE : "w-full px-8")}>
           {block.images.map((m, i) => (
             <ScrollReveal key={i} delay={i * 80}>
               <Figure media={m} aspect={block.aspect ?? "1/1"} />
