@@ -22,6 +22,24 @@ export function MetadataRow({ metadata }: { metadata: NonNullable<Project["metad
   );
 }
 
+/** Pink pill beside the title linking to a live/playable build. Tint at rest, solid brand on hover. */
+export function ProjectChip({ chip }: { chip?: Project["chip"] }) {
+  if (!chip) return null;
+  return (
+    <a
+      href={chip.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[var(--brand-accent-soft)] px-3 py-1 text-sm font-semibold text-[var(--brand-accent)] transition-colors duration-200 hover:bg-[var(--brand-accent)] hover:text-white"
+    >
+      <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+        <path d="M2 1.2v7.6a.5.5 0 0 0 .76.43l6.1-3.8a.5.5 0 0 0 0-.86L2.76.77A.5.5 0 0 0 2 1.2Z" fill="currentColor" />
+      </svg>
+      {chip.label}
+    </a>
+  );
+}
+
 export function ProjectLinks({ links }: { links?: Project["links"] }) {
   if (!links?.length) return null;
   return (
@@ -53,7 +71,10 @@ export default function CaseStudyHero({ project }: { project: Project }) {
 
       <div className="flex w-full flex-col items-start gap-10">
         <ScrollReveal variant="fade" delay={80}>
-          <h1 className="text-4xl font-normal leading-normal text-[var(--ink-strong)]">{project.title}</h1>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <h1 className="text-4xl font-normal leading-normal text-[var(--ink-strong)]">{project.title}</h1>
+            <ProjectChip chip={project.chip} />
+          </div>
           <p className="mt-2 text-lg leading-normal text-[var(--ink-subtle)]">{project.description}</p>
         </ScrollReveal>
 

@@ -64,7 +64,13 @@ export default function MediaFrame({
   return (
     <div
       ref={boxRef}
-      className={clsx("relative isolate w-full shrink-0 overflow-hidden bg-[var(--placeholder)]", rounded, className)}
+      className={clsx(
+        "relative isolate w-full shrink-0 overflow-hidden",
+        // Grey only while empty/loading, so stacked slices never show hairline seams once loaded.
+        !(hasMedia && ready) && "bg-[var(--placeholder)]",
+        rounded,
+        className,
+      )}
       style={{ aspectRatio: aspect }}
     >
       {src && (

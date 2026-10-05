@@ -7,3 +7,5 @@ next-env.d.ts
 .DS_Store
 # generated at build time
 public/changelog.json
+# image originals (only the optimized output in public/projects is committed)
+media-src/

@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/generate-changelog.mjs",
+    "predev": "node scripts/generate-changelog.mjs && node scripts/process-images.mjs",
     "dev": "next dev --port 3001",
-    "prebuild": "node scripts/generate-changelog.mjs",
+    "prebuild": "node scripts/generate-changelog.mjs && node scripts/process-images.mjs",
     "build": "next build",
+    "images": "node scripts/process-images.mjs",
     "preview": "npx serve out -l 3002",
     "typecheck": "tsc --noEmit"
   },
@@ -21,6 +22,7 @@
     "@types/node": "^20.10.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }

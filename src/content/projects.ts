@@ -1,4 +1,5 @@
-import type { Block, Project } from "./types";
+import type { Block, Project, SizedImage } from "./types";
+import media from "./media.generated.json";
 
 /**
  * ALL PROJECTS LIVE HERE.
@@ -37,7 +38,7 @@ function caseStudySkeleton(): Block[] {
   ];
 }
 
-export const projects: Project[] = [
+const projectList: Project[] = [
   // ───────────────────────────── WORK ─────────────────────────────
   {
     slug: "mecha",
@@ -99,6 +100,7 @@ export const projects: Project[] = [
     slug: "old-man-and-the-sea",
     section: "work",
     title: "The Old Man and the Sea",
+    chip: { label: "Click to play", href: "https://kshtj11.github.io/old-man/" },
     year: "2024",
     description: "Placeholder: one-line summary.",
     links: [{ label: "View on Behance", href: "https://www.behance.net/" }], // PLACEHOLDER URL
@@ -140,6 +142,20 @@ export const projects: Project[] = [
   },
   // Photography and Fun don't need case studies; they live only in src/content/play.ts.
 ];
+
+type MediaEntry = { cover: SizedImage | null; images: SizedImage[] };
+const mediaBySlug = media as Record<string, MediaEntry>;
+
+/** Projects with cover + popup images filled in from the image pipeline (hand-set values win). */
+export const projects: Project[] = projectList.map((p) => {
+  const m = mediaBySlug[p.slug];
+  if (!m) return p;
+  return {
+    ...p,
+    cover: p.cover ?? m.cover?.src,
+    images: p.images ?? m.images.map((img, i) => ({ ...img, alt: `${p.title}, image ${i + 1}` })),
+  };
+});
 
 export function projectsIn(section: Project["section"]) {
   return projects.filter((p) => p.section === section && !p.hidden);

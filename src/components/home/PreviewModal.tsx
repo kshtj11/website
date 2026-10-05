@@ -6,7 +6,7 @@ import type { Project } from "@/content/types";
 import { projectHref } from "@/content/projects";
 import MediaFrame from "../shared/MediaFrame";
 import { ArrowUpRight, CloseIcon, ExpandIcon } from "../shared/icons";
-import { MetadataRow, ProjectLinks } from "../case-study/CaseStudyHero";
+import { MetadataRow, ProjectChip, ProjectLinks } from "../case-study/CaseStudyHero";
 
 const EXIT_MS = 300;
 
@@ -83,11 +83,14 @@ export default function PreviewModal({ project, onClose }: { project: Project; o
         <div className="flex-1 overflow-y-auto">
           <div className="flex w-full flex-col items-start gap-5 px-44 pb-10 pt-20 max-lg:px-16 max-md:px-8">
             <div className="flex w-full flex-col gap-1.5">
-              <p className="flex items-center gap-1.5 text-xl leading-normal text-[var(--ink-strong)]">
-                {project.title}
-                <span className="text-base font-medium text-[var(--ink-subtle)]">•</span>
-                <span className="text-[var(--ink-subtle)]">{project.year}</span>
-              </p>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <p className="flex items-center gap-1.5 text-xl leading-normal text-[var(--ink-strong)]">
+                  {project.title}
+                  <span className="text-base font-medium text-[var(--ink-subtle)]">•</span>
+                  <span className="text-[var(--ink-subtle)]">{project.year}</span>
+                </p>
+                <ProjectChip chip={project.chip} />
+              </div>
               <p className="text-base leading-normal tracking-[0.005em] text-[var(--ink-muted)]">{project.description}</p>
             </div>
 
@@ -107,17 +110,37 @@ export default function PreviewModal({ project, onClose }: { project: Project; o
               </div>
             )}
 
-            <MediaFrame
-              src={project.cover}
-              videoSrc={project.coverVideo}
-              alt={project.title}
-              aspect="1097/616"
-              rounded="rounded-2xl"
-              className="mt-3"
-              placeholderLabel={project.cover ? undefined : "cover"}
-              eager
-            />
+            {!project.images?.length && (
+              <MediaFrame
+                src={project.cover}
+                videoSrc={project.coverVideo}
+                alt={project.title}
+                aspect="1097/616"
+                rounded="rounded-2xl"
+                className="mt-3"
+                placeholderLabel={project.cover ? undefined : "cover"}
+                eager
+              />
+            )}
           </div>
+
+          {project.images?.length ? (
+            // Behance-style canvas, full panel width (outside the inset text column): slices sit
+            // edge to edge with no gaps, so panels spanning several images stay continuous.
+            // The panel's own rounded corners clip the bottom of the stack.
+            <div className="flex w-full flex-col">
+              {project.images.map((img, i) => (
+                <MediaFrame
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  aspect={`${img.width}/${img.height}`}
+                  rounded=""
+                  eager={i === 0}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

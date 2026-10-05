@@ -10,6 +10,9 @@ export type Media = {
   caption?: string;
 };
 
+/** An image whose pixel size is known, so its box can be reserved before it loads. */
+export type SizedImage = { src: string; width: number; height: number; alt?: string };
+
 /** Building blocks for a case study page, rendered top to bottom. */
 export type Block =
   /** Big numbered chapter title, e.g. "01 — Research" */
@@ -50,10 +53,15 @@ export type Project = {
   coverVideo?: string;
   /** Square logo/icon shown above the case-study title (160×160) */
   logo?: string;
+  /** Pink pill next to the title (popup + case-study hero), e.g. "Click to play" → a live build */
+  chip?: { label: string; href: string };
   /** Buttons in the popup + case-study hero (Behance, live site, repo…) */
   links?: { label: string; href: string }[];
   /** Hero facts row: Timeline, Role, Team, Tools… */
   metadata?: { label: string; value: string[] }[];
+  /** Images shown stacked in the preview popup after the facts row. Filled automatically
+   *  from media-src/projects/<slug>/ by `npm run images`; set by hand only to override. */
+  images?: SizedImage[];
   /** Case study body. Empty/omitted = popup only shows the summary. */
   blocks?: Block[];
   /** Hide from the grid without deleting */

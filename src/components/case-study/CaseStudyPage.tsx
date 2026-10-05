@@ -44,6 +44,17 @@ export default function CaseStudyPage({ project }: { project: Project }) {
       <CaseStudyHeader sectionLabel={sectionLabel} sectionHref={sectionHref} title={project.title} />
       <main className="mx-auto flex w-full max-w-[800px] flex-col pb-16">
         <CaseStudyHero project={project} />
+        {project.images?.length ? (
+          // Same pipeline images as the popup, so mobile (which skips the popup) sees them too.
+          // Seamless stack (see PreviewModal): no gaps between slices, rounded outer corners only.
+          <div className="w-full px-8 pb-10">
+            <div className="flex w-full flex-col overflow-hidden rounded-2xl">
+              {project.images.map((img) => (
+                <MediaFrame key={img.src} src={img.src} alt={img.alt} aspect={`${img.width}/${img.height}`} rounded="" />
+              ))}
+            </div>
+          </div>
+        ) : null}
         {project.blocks && <Blocks blocks={project.blocks} />}
         <MoreProjects current={project} />
       </main>
