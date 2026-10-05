@@ -24,7 +24,7 @@ function Expandable({ expanded, children }: { expanded: boolean; children: React
 /**
  * Left rail, 202px, sticky at top-8.
  *   group header   16px/500 zinc-400 → zinc-500 while its section is on screen
- *   child          indented 12px; active = blue-500, count in zinc-300
+ *   child          indented 12px; active = brand accent, count in zinc-300
  *   rhythm         8px between rows
  */
 export default function Sidebar({

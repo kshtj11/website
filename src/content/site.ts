@@ -3,7 +3,9 @@
  */
 export const site = {
   /** Shown big in the header and footer (lowercase is part of the look). */
-  name: "kshitij", // PLACEHOLDER — confirm spelling / casing
+  name: "kshitij", // footer wordmark (lowercase is part of the look)
+  /** Header intro: greeting renders in the brand gradient, then the name line. */
+  intro: { greeting: "नमस्कार,", name: "I’m Kshitij Ghag" },
   /** Single letter used by the placeholder logo until you drop in your own SVG. */
   monogram: "k",
   url: "https://kshtj.in",

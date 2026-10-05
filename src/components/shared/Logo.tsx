@@ -14,11 +14,10 @@ export default function Logo({ className }: { className?: string }) {
         className,
       )}
       style={{
-        background:
-          "linear-gradient(200deg, var(--brand-grad-1) 0%, var(--brand-grad-3) 55%, var(--brand-grad-4) 100%)",
+        background: "var(--brand-gradient)",
       }}
     >
-      <span className="text-[0.6em] font-semibold leading-none text-[var(--ink)]">{site.monogram}</span>
+      <span className="text-[0.6em] font-semibold leading-none text-white">{site.monogram}</span>
     </span>
   );
 }

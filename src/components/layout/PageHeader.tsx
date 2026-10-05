@@ -12,8 +12,7 @@ import Logo from "../shared/Logo";
  */
 export default function PageHeader({ children, variant }: { children?: ReactNode; variant: string }) {
   return (
-    <header className="header-gradient relative z-[41] flex w-full shrink-0 flex-col items-start">
-      <div className="header-grain" />
+    <header className="relative z-[41] flex w-full shrink-0 flex-col items-start bg-[var(--background)]">
 
       <div className="relative z-[2] w-full px-16 pb-8 pt-8 max-md:px-6 max-md:pb-4">
         <Link href="/" aria-label={`${site.name} home`} className="inline-block transition-opacity hover:opacity-80">
@@ -22,8 +21,14 @@ export default function PageHeader({ children, variant }: { children?: ReactNode
       </div>
 
       <div className="relative z-[2] flex w-full flex-col items-start px-16 pt-14 max-md:min-h-[210px] max-md:px-6 max-md:pt-20 md:min-h-[176px]">
-        <h1 className="w-full text-4xl font-medium leading-normal tracking-[0.0125em] text-[var(--ink)]">
-          {site.name}
+        {/* Intro (Figma "Frame 2"): Hind Bold greeting in the brand gradient + Hanken Grotesk ExtraBold name, 48px, 9px apart */}
+        <h1 className="flex w-full flex-wrap items-baseline gap-x-[9px] text-[48px] leading-normal max-md:text-[36px]">
+          <span lang="mr" className="text-brand-gradient font-[family-name:var(--font-intro-hi)] font-bold">
+            {site.intro.greeting}
+          </span>
+          <span className="font-[family-name:var(--font-intro-en)] font-extrabold text-[var(--ink-strong)]">
+            {site.intro.name}
+          </span>
         </h1>
         {children && (
           // key={variant} restarts the entrance when switching tabs

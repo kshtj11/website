@@ -8,7 +8,7 @@ function SectionHeader({ section }: { section: PlaySection }) {
   const action = section.action && (
     <Link
       href={section.action.href}
-      className="inline-flex shrink-0 items-center gap-1 pr-2.5 text-base text-zinc-500 transition-colors hover:text-blue-400"
+      className="inline-flex shrink-0 items-center gap-1 pr-2.5 text-base text-zinc-500 transition-colors hover:text-[var(--brand-accent)]"
     >
       {section.action.label}
       <ArrowUpRight />

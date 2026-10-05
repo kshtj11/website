@@ -80,8 +80,8 @@ In Chrome, corners render as **squircles** (`corner-shape: squircle`) with radii
 
 Defined at the top of `app/globals.css`:
 
-- Header gradient: `#D5E0FF → #E2EAFF → #F5E2FF → #FDE9FA → #FFF5FC → #FFFEFF → white`, at 190°. It drifts slowly (8s loop).
-- Accent: blue-500 `#3b82f6` (links on hover, primary button, text selection).
+- Brand: rose `#DA356C` → magenta `#CF3283` → violet `#9C1EAA` (the intro gradient). Header is plain white.
+- Accent: magenta `#CF3283`, hover rose `#DA356C` (links, primary button, active sidebar item, text selection). Titles `#252525`.
 - Neutrals: Tailwind zinc. Hairlines are zinc-100 `#f4f4f5`, placeholders zinc-200 `#e4e4e7`.
 
 ## Motion
@@ -90,7 +90,6 @@ Everything is CSS transitions/keyframes plus a few small observers. **No animati
 
 | Effect | Where | Timing |
 | --- | --- | --- |
-| Header gradient drift | `.header-gradient` | 8s ease, infinite |
 | Hero line entrance | `.hero-copy` | rise 12px + fade, 360ms |
 | Card entrance | `.project-card` | rise 12px + fade, 450ms, +60ms per row (max 300ms) |
 | Card hover | media `scale(0.99)`, caption rises 8px + fades in | 300ms ease-out |
