@@ -115,9 +115,9 @@ const projectList: Project[] = [
   // These back the "Case study" links on the Play page (/play/<slug>/).
   // The Play page itself (sidebar + galleries) is laid out in src/content/play.ts.
   {
-    slug: "glazed-tiles",
+    slug: "tiles-mosaic-tool",
     section: "play",
-    title: "Glazed Tiles",
+    title: "Tiles Mosaic Tool",
     year: "2026",
     description: "A type + image mosaic tool that maps real glazed tiles onto anything, with quadtree or grid tiling.",
     chip: { label: "Click to play", href: "https://kshtj11.github.io/tiles-mosiac/" },
@@ -139,7 +139,7 @@ const projectList: Project[] = [
           "Getting annoyed with OTF files, I vibe-coded a tool to map the tiles by colour and gradient instead… and then kept adding everything I was imagining. It became a much bigger thing than I had planned.",
         ],
       },
-      { type: "image", size: "wide", ...pic("glazed-tiles", "glaze-type-hi.gif", "The word hi built from glazed tiles, animating in"), caption: "Type mode: tiles fill the letterforms, and the whole thing animates." },
+      { type: "image", size: "wide", ...pic("glazed-tiles", "glaze-type-hi", "The word hi built from glazed tiles, animating in"), caption: "Type mode: tiles fill the letterforms, and the whole thing animates." },
       {
         type: "gallery",
         columns: 3,

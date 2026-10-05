@@ -258,9 +258,10 @@
         "height": 1200
       },
       {
-        "src": "/projects/glazed-tiles/glaze-type-hi.gif",
+        "src": "/projects/glazed-tiles/glaze-type-hi.webp",
         "width": 1280,
-        "height": 1280
+        "height": 1280,
+        "card": "/projects/glazed-tiles/glaze-type-hi.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/image-29.webp",
@@ -285,7 +286,8 @@
       {
         "src": "/projects/glazed-tiles/namaste.gif",
         "width": 1156,
-        "height": 702
+        "height": 702,
+        "card": "/projects/glazed-tiles/namaste.card.webp"
       }
     ]
   },
@@ -309,7 +311,8 @@
       {
         "src": "/projects/old-man-and-the-sea/3.gif",
         "width": 1400,
-        "height": 1000
+        "height": 1000,
+        "card": "/projects/old-man-and-the-sea/3.card.webp"
       },
       {
         "src": "/projects/old-man-and-the-sea/5.webp",
@@ -329,7 +332,8 @@
       {
         "src": "/projects/old-man-and-the-sea/8.gif",
         "width": 1400,
-        "height": 450
+        "height": 450,
+        "card": "/projects/old-man-and-the-sea/8.card.webp"
       },
       {
         "src": "/projects/old-man-and-the-sea/9.webp",
@@ -354,17 +358,20 @@
       {
         "src": "/projects/old-man-and-the-sea/13.gif",
         "width": 1400,
-        "height": 1000
+        "height": 1000,
+        "card": "/projects/old-man-and-the-sea/13.card.webp"
       },
       {
         "src": "/projects/old-man-and-the-sea/14.gif",
         "width": 1400,
-        "height": 1000
+        "height": 1000,
+        "card": "/projects/old-man-and-the-sea/14.card.webp"
       },
       {
         "src": "/projects/old-man-and-the-sea/15.gif",
         "width": 1400,
-        "height": 1000
+        "height": 1000,
+        "card": "/projects/old-man-and-the-sea/15.card.webp"
       },
       {
         "src": "/projects/old-man-and-the-sea/16.webp",
@@ -404,7 +411,8 @@
       {
         "src": "/projects/old-man-and-the-sea/23.gif",
         "width": 1400,
-        "height": 700
+        "height": 700,
+        "card": "/projects/old-man-and-the-sea/23.card.webp"
       },
       {
         "src": "/projects/old-man-and-the-sea/24.webp",

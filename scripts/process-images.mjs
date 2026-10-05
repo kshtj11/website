@@ -7,7 +7,7 @@
 //
 // Originals stay out of git (media-src/ is ignored); the optimized WebP files and the manifest are committed.
 // When media-src/ is missing (e.g. on CI) the script leaves existing output untouched.
-import { existsSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import { copyFile, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
@@ -18,6 +18,10 @@ const MANIFEST = "src/content/media.generated.json";
 const MAX_WIDTH = 2800; // keep Behance-retina exports at full resolution
 const QUALITY = 92; // high quality; with smartSubsample below, colour edges + small text stay crisp
 const INPUT = /\.(png|jpe?g|webp|avif|tiff?|gif)$/i;
+const BIG_GIF_BYTES = 8 * 1024 * 1024; // GIFs above this become animated WebP (smaller GIFs are copied untouched)
+const ANIM_QUALITY = 88; // animated WebP quality (visually matches the source GIF)
+const CARD_WIDTH = 720; // grid-thumbnail width (2x a ~354px masonry column)
+const CARD_QUALITY = 85;
 
 if (!SRC_ROOTS.some((r) => existsSync(r))) {
   console.log(`process-images: no media-src/ folders, keeping existing ${MANIFEST}`);
@@ -35,9 +39,12 @@ async function entryFromOutput(slug) {
   const outDir = path.join(OUT, slug);
   if (!existsSync(outDir) || !(await stat(outDir)).isDirectory()) return null;
   const entry = { cover: null, images: [] };
-  for (const f of (await readdir(outDir)).filter((f) => /\.(webp|gif)$/.test(f)).sort(natural.compare)) {
+  const all = await readdir(outDir);
+  for (const f of all.filter((f) => /\.(webp|gif)$/.test(f) && !f.endsWith(".card.webp")).sort(natural.compare)) {
     const meta = await sharp(path.join(outDir, f)).metadata();
     const item = { src: `/projects/${slug}/${f}`, width: meta.width, height: meta.pageHeight ?? meta.height };
+    const card = `${path.parse(f).name}.card.webp`;
+    if (all.includes(card)) item.card = `/projects/${slug}/${card}`;
     if (path.parse(f).name === "cover") entry.cover = item;
     else entry.images.push(item);
   }
@@ -70,35 +77,49 @@ for (const slug of [...slugs].sort(natural.compare)) {
 
   for (const file of files) {
     const base = path.parse(file).name.toLowerCase().replace(/[^a-z0-9-]+/g, "-");
-    // GIFs are copied untouched (animation + quality preserved); everything else becomes WebP.
-    const isGif = /\.gif$/i.test(file);
-    const outName = isGif ? `${base}.gif` : `${base}.webp`;
     const srcPath = path.join(srcDir, file);
+    const srcStat = await stat(srcPath);
+    const isGif = /\.gif$/i.test(file);
+    // GIFs are copied untouched (animation + quality preserved) unless they're huge; those become
+    // animated WebP, which looks the same at a fraction of the size. Everything else becomes WebP.
+    const bigGif = isGif && srcStat.size > BIG_GIF_BYTES;
+    const outName = isGif && !bigGif ? `${base}.gif` : `${base}.webp`;
     const outPath = path.join(outDir, outName);
+    // Animated files also get a small "card" copy for grid thumbnails (Play masonry).
+    const cardName = isGif ? `${base}.card.webp` : null;
+    const cardPath = cardName ? path.join(outDir, cardName) : null;
     keep.add(outName);
+    if (cardName) keep.add(cardName);
 
-    // Skip work when the output is newer than the source.
-    const fresh = existsSync(outPath) && (await stat(outPath)).mtimeMs >= (await stat(srcPath)).mtimeMs;
-    if (!fresh) {
-      if (isGif) {
+    // Skip work when the outputs are newer than the source.
+    const isFresh = (p) => !p || (existsSync(p) && statSync(p).mtimeMs >= srcStat.mtimeMs);
+    if (!isFresh(outPath) || !isFresh(cardPath)) {
+      if (isGif && !bigGif) {
         await copyFile(srcPath, outPath);
       } else {
-        await sharp(srcPath, { animated: false })
+        await sharp(srcPath, { animated: isGif, limitInputPixels: false })
           .rotate()
           .resize({ width: MAX_WIDTH, withoutEnlargement: true })
-          .webp({ quality: QUALITY, smartSubsample: true, effort: 5 })
+          .webp(isGif ? { quality: ANIM_QUALITY, smartSubsample: true, effort: 5 } : { quality: QUALITY, smartSubsample: true, effort: 5 })
           .toFile(outPath);
+      }
+      if (cardPath) {
+        await sharp(srcPath, { animated: true, limitInputPixels: false })
+          .resize({ width: CARD_WIDTH, withoutEnlargement: true })
+          .webp({ quality: CARD_QUALITY, effort: 5 })
+          .toFile(cardPath);
       }
       written++;
     } else {
       skipped++;
     }
 
-    // For animated GIFs, pageHeight is one frame's height.
+    // For animated files, pageHeight is one frame's height.
     const meta = await sharp(outPath).metadata();
     const width = meta.width;
     const height = meta.pageHeight ?? meta.height;
     const item = { src: `/projects/${slug}/${outName}`, width, height };
+    if (cardName) item.card = `/projects/${slug}/${cardName}`;
     if (base === "cover") entry.cover = item;
     else entry.images.push(item);
   }

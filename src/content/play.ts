@@ -4,7 +4,7 @@ import { pic } from "./media";
  * PLAY PAGE — sidebar + sectioned masonry gallery (same hierarchy as the reference's Art page).
  *
  *   Sidebar group  ("Experiments")           ← collapsible, expands while one of its sections is on screen
- *     └ Section    ("Glazed Tiles" 10)       ← a header row + a gallery of pieces; count = pieces.length
+ *     └ Section    ("Tiles Mosaic Tool" 10) ← a header row + a gallery of pieces; count = pieces.length
  *         └ Piece  (one image + caption)     ← click opens the lightbox
  *
  * A group with a single section and no label of its own renders as a flat sidebar item.
@@ -43,7 +43,8 @@ export type PlayGroup = {
 /** A real piece from the image pipeline (sized automatically, GIFs stay animated). */
 function piece(slug: string, file: string, title: string, meta?: string): PlayPiece {
   const img = pic(slug, file, title);
-  return { src: img.src, title, meta, aspect: img.width / img.height };
+  // Animated pieces show the light card copy in the grid and the full file in the lightbox.
+  return { src: img.card ?? img.src, fullSrc: img.src, title, meta, aspect: img.width / img.height };
 }
 
 /** Placeholder pieces with a mix of aspect ratios so the masonry is visible. */
@@ -62,11 +63,11 @@ export const playGroups: PlayGroup[] = [
     label: "Experiments",
     sections: [
       {
-        id: "glazed-tiles",
-        label: "Glazed Tiles",
-        action: { label: "Case study", href: "/play/glazed-tiles/" },
+        id: "tiles-mosaic-tool",
+        label: "Tiles Mosaic Tool",
+        action: { label: "Case study", href: "/play/tiles-mosaic-tool/" },
         pieces: [
-          piece("glazed-tiles", "glaze-type-hi.gif", "hi", "type, animated"),
+          piece("glazed-tiles", "glaze-type-hi", "hi", "type, animated"),
           piece("glazed-tiles", "image 29.png", "S.T.D. P.C.O. I.S.D.", "quadtree"),
           piece("glazed-tiles", "Frame 28.png", "I love glazing", "type"),
           piece("glazed-tiles", "namaste.gif", "नमस्ते", "GIF"),

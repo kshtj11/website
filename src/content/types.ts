@@ -14,7 +14,14 @@ export type Media = {
 };
 
 /** An image whose pixel size is known, so its box can be reserved before it loads. */
-export type SizedImage = { src: string; width: number; height: number; alt?: string };
+export type SizedImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt?: string;
+  /** Small animated copy for grid thumbnails (made by the pipeline for GIFs) */
+  card?: string;
+};
 
 /** Building blocks for a case study page, rendered top to bottom. */
 export type Block =
