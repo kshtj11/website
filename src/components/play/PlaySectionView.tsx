@@ -73,7 +73,7 @@ export default function PlaySectionView({
   onOpen: (p: PlayPiece) => void;
 }) {
   return (
-    <section id={section.id} data-play-section className="flex w-full scroll-mt-8 flex-col items-start gap-3">
+    <section id={section.id} data-play-section className="flex w-full scroll-mt-24 flex-col items-start gap-3">
       <ScrollReveal variant="fade" className="w-full">
         <SectionHeader section={section} />
       </ScrollReveal>

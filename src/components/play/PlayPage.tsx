@@ -11,7 +11,7 @@ const SPY_LINE = 250;
 
 /**
  * Play tab body: 202px sticky sidebar + content column (gap-4 between), sections 48px apart.
- * Sidebar is hidden below lg (1024px); the page is then one long scroll.
+ * Sidebar sticks below the sticky top bar (top-24); hidden below lg (1024px); the page is then one long scroll.
  */
 export default function PlayPage() {
   const [activeId, setActiveId] = useState(playSections[0]?.id ?? "");
@@ -49,7 +49,7 @@ export default function PlayPage() {
 
   return (
     <div className="relative flex w-full shrink-0 flex-col items-start gap-4 px-16 pt-2 max-md:px-6 lg:flex-row">
-      <aside className="z-30 hidden w-[202px] shrink-0 pb-8 lg:sticky lg:top-8 lg:block">
+      <aside className="z-30 hidden w-[202px] shrink-0 pb-8 lg:sticky lg:top-24 lg:block">
         <Sidebar groups={playGroups} activeId={activeId} onSelect={handleSelect} />
       </aside>
 

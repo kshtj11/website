@@ -4,6 +4,11 @@
 export const site = {
   /** Shown big in the header and footer (lowercase is part of the look). */
   name: "kshitij", // footer wordmark (lowercase is part of the look)
+  /** Top bar: name + role */
+  fullName: "Kshitij Ghag",
+  role: "Interaction Designer",
+  /** Résumé link in the top bar — PLACEHOLDER until the Google Drive link exists */
+  resumeUrl: "https://drive.google.com/",
   /** Header intro: greeting renders in the brand gradient, then the name line. */
   intro: { greeting: "नमस्कार,", name: "I’m Kshitij Ghag" },
   /** Single letter used by the placeholder logo until you drop in your own SVG. */

@@ -16,6 +16,7 @@
   --brand-accent-hover: var(--brand-rose);
   --brand-accent-border: var(--brand-rose);
   --brand-accent-soft: #fbe4ef; /* magenta tint for selection */
+  --link-blue: #2563eb; /* Résumé link in the top bar */
 
   /* Neutral ramp (zinc) */
   --ink-strong: #252525; /* titles, intro name */
