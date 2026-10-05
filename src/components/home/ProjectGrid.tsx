@@ -7,10 +7,8 @@ import { projectHref } from "@/content/projects";
 import ProjectCard from "./ProjectCard";
 import PreviewModal from "./PreviewModal";
 
-const FEATURED_COUNT = 4;
-
 /**
- * 2-column grid (gap-6, px-16) on desktop, single column (gap-8, px-6) on mobile.
+ * Card grid: 1 column on tablet/small laptops, 2 columns from 1280px (gap-6, px-16); mobile stacks (gap-8, px-6).
  * Desktop click → preview popup with the URL updated in place; mobile click → full page.
  */
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
@@ -44,14 +42,14 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      <div className="relative hidden w-full shrink-0 grid-cols-2 gap-6 px-16 pb-2 pt-2.5 md:grid">
+      <div className="relative hidden w-full shrink-0 grid-cols-1 gap-6 px-16 pb-2 pt-2.5 md:grid xl:grid-cols-2">
         {projects.map((p, i) => (
-          <ProjectCard key={p.slug} project={p} onOpen={handleOpen} featured={i < FEATURED_COUNT} index={Math.floor(i / 2)} />
+          <ProjectCard key={p.slug} project={p} onOpen={handleOpen} index={Math.floor(i / 2)} />
         ))}
       </div>
       <div className="relative flex w-full shrink-0 flex-col gap-8 px-6 py-4 md:hidden">
         {projects.map((p, i) => (
-          <ProjectCard key={p.slug} project={p} onOpen={handleOpen} featured={i < FEATURED_COUNT} index={i} />
+          <ProjectCard key={p.slug} project={p} onOpen={handleOpen} index={i} />
         ))}
       </div>
 

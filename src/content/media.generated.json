@@ -240,22 +240,26 @@
       {
         "src": "/projects/glazed-tiles/frame-28.webp",
         "width": 1280,
-        "height": 1280
+        "height": 1280,
+        "card": "/projects/glazed-tiles/frame-28.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/frame-33.webp",
         "width": 1208,
-        "height": 1208
+        "height": 1208,
+        "card": "/projects/glazed-tiles/frame-33.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/frame-37.webp",
         "width": 1200,
-        "height": 1200
+        "height": 1200,
+        "card": "/projects/glazed-tiles/frame-37.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/frame-39.webp",
         "width": 1200,
-        "height": 1200
+        "height": 1200,
+        "card": "/projects/glazed-tiles/frame-39.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/glaze-type-hi.webp",
@@ -266,22 +270,26 @@
       {
         "src": "/projects/glazed-tiles/image-29.webp",
         "width": 1200,
-        "height": 1200
+        "height": 1200,
+        "card": "/projects/glazed-tiles/image-29.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/image-66.webp",
         "width": 1024,
-        "height": 1024
+        "height": 1024,
+        "card": "/projects/glazed-tiles/image-66.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/image-67.webp",
         "width": 1024,
-        "height": 1024
+        "height": 1024,
+        "card": "/projects/glazed-tiles/image-67.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/image-70.webp",
         "width": 1024,
-        "height": 1024
+        "height": 1024,
+        "card": "/projects/glazed-tiles/image-70.card.webp"
       },
       {
         "src": "/projects/glazed-tiles/namaste.gif",
@@ -418,6 +426,256 @@
         "src": "/projects/old-man-and-the-sea/24.webp",
         "width": 1400,
         "height": 800
+      }
+    ]
+  },
+  "photography": {
+    "cover": null,
+    "images": [
+      {
+        "src": "/projects/photography/1f8fa241-269a-403f-bed4-c3a5516ee231-copied-media-2.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/1f8fa241-269a-403f-bed4-c3a5516ee231-copied-media-2.card.webp"
+      },
+      {
+        "src": "/projects/photography/3a41cbbd-4df1-4195-928c-b46f7984ff14-copied-media-2.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/3a41cbbd-4df1-4195-928c-b46f7984ff14-copied-media-2.card.webp"
+      },
+      {
+        "src": "/projects/photography/9d3bb1cb-cf48-492a-9c9b-9e32bc867a07-copied-media-2.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/9d3bb1cb-cf48-492a-9c9b-9e32bc867a07-copied-media-2.card.webp"
+      },
+      {
+        "src": "/projects/photography/18b8a187-ea8f-4d81-84c9-dc5e7c6a7974-copied-media-2.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/18b8a187-ea8f-4d81-84c9-dc5e7c6a7974-copied-media-2.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf0924.webp",
+        "width": 2800,
+        "height": 2100,
+        "card": "/projects/photography/dscf0924.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf0939.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf0939.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf0960.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf0960.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf0989.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf0989.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf1613.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf1613.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf6690.webp",
+        "width": 2800,
+        "height": 1870,
+        "card": "/projects/photography/dscf6690.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf7273.webp",
+        "width": 2800,
+        "height": 1870,
+        "card": "/projects/photography/dscf7273.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf7673.webp",
+        "width": 2800,
+        "height": 2100,
+        "card": "/projects/photography/dscf7673.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf7905.webp",
+        "width": 2800,
+        "height": 1870,
+        "card": "/projects/photography/dscf7905.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf9559.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf9559.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf9647.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf9647.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf9671.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/photography/dscf9671.card.webp"
+      },
+      {
+        "src": "/projects/photography/dscf9714.webp",
+        "width": 2800,
+        "height": 1866,
+        "card": "/projects/photography/dscf9714.card.webp"
+      }
+    ]
+  },
+  "sketchbook": {
+    "cover": null,
+    "images": [
+      {
+        "src": "/projects/sketchbook/21668957-6398-4c5d-bf1c-3242fb032906.webp",
+        "width": 2400,
+        "height": 2400,
+        "card": "/projects/sketchbook/21668957-6398-4c5d-bf1c-3242fb032906.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/260011618-981450522406768-4820028179778883385-n.webp",
+        "width": 1440,
+        "height": 1800,
+        "card": "/projects/sketchbook/260011618-981450522406768-4820028179778883385-n.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/625145266-18312291268270194-4167223878438948442-n.webp",
+        "width": 1440,
+        "height": 1772,
+        "card": "/projects/sketchbook/625145266-18312291268270194-4167223878438948442-n.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/651224490-18082228610034953-2639138771773374084-n.webp",
+        "width": 1440,
+        "height": 1001,
+        "card": "/projects/sketchbook/651224490-18082228610034953-2639138771773374084-n.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/652115312-18003005462856356-4618412681920759795-n.webp",
+        "width": 1440,
+        "height": 1440,
+        "card": "/projects/sketchbook/652115312-18003005462856356-4618412681920759795-n.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/653479365-18130757926551460-5060934881721301088-n.webp",
+        "width": 873,
+        "height": 873,
+        "card": "/projects/sketchbook/653479365-18130757926551460-5060934881721301088-n.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/655162981-18096017666099035-4492478899344669553-n.webp",
+        "width": 1440,
+        "height": 1801,
+        "card": "/projects/sketchbook/655162981-18096017666099035-4492478899344669553-n.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/alain-de.webp",
+        "width": 2800,
+        "height": 2800,
+        "card": "/projects/sketchbook/alain-de.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/dczbhlbhrgce1si.webp",
+        "width": 1900,
+        "height": 891,
+        "card": "/projects/sketchbook/dczbhlbhrgce1si.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/frame-8-1.webp",
+        "width": 1080,
+        "height": 784,
+        "card": "/projects/sketchbook/frame-8-1.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/frame-17.webp",
+        "width": 1529,
+        "height": 779,
+        "card": "/projects/sketchbook/frame-17.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/frame-18.webp",
+        "width": 1059,
+        "height": 779,
+        "card": "/projects/sketchbook/frame-18.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/frame-19.webp",
+        "width": 1080,
+        "height": 1502,
+        "card": "/projects/sketchbook/frame-19.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/frenchanda.webp",
+        "width": 2800,
+        "height": 1867,
+        "card": "/projects/sketchbook/frenchanda.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/iloveslugs.webp",
+        "width": 2800,
+        "height": 1575,
+        "card": "/projects/sketchbook/iloveslugs.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/paar-e-taalab-1.webp",
+        "width": 2188,
+        "height": 1378,
+        "card": "/projects/sketchbook/paar-e-taalab-1.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/piercebanana.webp",
+        "width": 2800,
+        "height": 1575,
+        "card": "/projects/sketchbook/piercebanana.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/scan-20231107-11-2.webp",
+        "width": 756,
+        "height": 1098,
+        "card": "/projects/sketchbook/scan-20231107-11-2.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/scan-20231107-12-1.webp",
+        "width": 758,
+        "height": 1098,
+        "card": "/projects/sketchbook/scan-20231107-12-1.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/scan-20231108-2-1.webp",
+        "width": 1080,
+        "height": 779,
+        "card": "/projects/sketchbook/scan-20231108-2-1.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/scan-20231108-3-1.webp",
+        "width": 1080,
+        "height": 779,
+        "card": "/projects/sketchbook/scan-20231108-3-1.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/scan-20231108-1.webp",
+        "width": 1080,
+        "height": 729,
+        "card": "/projects/sketchbook/scan-20231108-1.card.webp"
+      },
+      {
+        "src": "/projects/sketchbook/scan-20231116-2-2.webp",
+        "width": 1080,
+        "height": 729,
+        "card": "/projects/sketchbook/scan-20231116-2-2.card.webp"
       }
     ]
   }

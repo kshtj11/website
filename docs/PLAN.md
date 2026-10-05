@@ -38,7 +38,7 @@ What's still borrowed from the reference: the Work / Art / About pill tabs with 
   - [ ] Case studies: invent 1–2 block types of your own (before/after slider, process strip, live tool embed)
   - [ ] About: a semester/project timeline instead of a résumé list
 - [ ] **0.3 Swap her signature details** — You + Me
-  - [ ] Footer: drop the live clock + changelog scramble; add something yours (rotating greeting, "currently in…", a tile counter)
+  - [ ] Footer: full redesign (drop the 4-column layout, live clock + changelog scramble; make it yours)
   - [ ] Type: Hanken Grotesk + Hind everywhere (drop Figtree)
   - [ ] Colour: use the rose→violet gradient boldly; consider a warm ceramic off-white instead of pure white
   - [ ] Motion: one signature move of your own (tile flip / assemble) instead of fade-up
@@ -100,7 +100,7 @@ What's still borrowed from the reference: the Work / Art / About pill tabs with 
   - [ ] Optional sections: education, awards, skills, "now"
 - [ ] **17. Contact** — You
   - [ ] Real email (or set up hello@kshtj.in), Behance + LinkedIn URLs
-  - [ ] Résumé PDF? (Me: add a link in the footer/About)
+  - [ ] Résumé PDF on Google Drive → send the link (Me: it goes in site.resumeUrl; the top bar already links to it)
 
 ## Phase 5 — Polish & launch
 

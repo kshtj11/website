@@ -8,6 +8,7 @@
     "prebuild": "node scripts/generate-changelog.mjs && node scripts/process-images.mjs",
     "build": "next build",
     "images": "node scripts/process-images.mjs",
+    "figma:export": "node scripts/figma-export.mjs && node scripts/process-images.mjs",
     "preview": "npx serve out -l 3002",
     "typecheck": "tsc --noEmit"
   },

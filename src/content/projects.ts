@@ -1,5 +1,6 @@
 import type { Block, Project, SizedImage } from "./types";
 import { mediaBySlug, pic } from "./media";
+import { isVisible } from "./status";
 
 /**
  * ALL PROJECTS LIVE HERE.
@@ -42,6 +43,8 @@ const projectList: Project[] = [
   // ───────────────────────────── WORK ─────────────────────────────
   {
     slug: "mecha",
+    status: "draft",
+    tags: ["Internship","UI/UX"], // chips on the Work card
     section: "work",
     title: "Mecha",
     tag: "Internship",
@@ -57,6 +60,8 @@ const projectList: Project[] = [
   },
   {
     slug: "p1-ai-literature-review",
+    status: "draft",
+    tags: ["AI","Research","UI/UX"], // chips on the Work card
     section: "work",
     title: "AI Literature Review Tool",
     tag: "P1",
@@ -72,6 +77,7 @@ const projectList: Project[] = [
   },
   {
     slug: "ek-time",
+    tags: ["Research","UI/UX","Web + mobile"], // chips on the Work card
     section: "work",
     title: "Ek-Time",
     year: "2024",
@@ -85,6 +91,8 @@ const projectList: Project[] = [
   },
   {
     slug: "lenskart",
+    status: "draft",
+    tags: ["UI/UX"], // chips on the Work card
     section: "work",
     title: "Lenskart",
     year: "2024",
@@ -98,6 +106,7 @@ const projectList: Project[] = [
   },
   {
     slug: "old-man-and-the-sea",
+    tags: ["Game design","Interactive storytelling"], // chips on the Work card
     section: "work",
     title: "The Old Man and the Sea",
     chip: { label: "Click to play", href: "https://kshtj11.github.io/old-man/" },
@@ -200,6 +209,7 @@ const projectList: Project[] = [
   },
   {
     slug: "fractal-visualizer",
+    status: "draft",
     section: "play",
     title: "Fractal Visualizer",
     year: "2025",
@@ -224,7 +234,7 @@ export const projects: Project[] = projectList.map((p) => {
 });
 
 export function projectsIn(section: Project["section"]) {
-  return projects.filter((p) => p.section === section && !p.hidden);
+  return projects.filter((p) => p.section === section && isVisible(p));
 }
 
 export function getProject(section: Project["section"], slug: string) {

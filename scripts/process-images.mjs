@@ -21,6 +21,8 @@ const INPUT = /\.(png|jpe?g|webp|avif|tiff?|gif)$/i;
 const BIG_GIF_BYTES = 8 * 1024 * 1024; // GIFs above this become animated WebP (smaller GIFs are copied untouched)
 const ANIM_QUALITY = 88; // animated WebP quality (visually matches the source GIF)
 const CARD_WIDTH = 720; // grid-thumbnail width (2x a ~354px masonry column)
+// Collections shown in wider grids need bigger cards (2x a ~540px two-column cell).
+const CARD_WIDTH_FOR = { photography: 1080 };
 const CARD_QUALITY = 85;
 
 if (!SRC_ROOTS.some((r) => existsSync(r))) {
@@ -51,10 +53,23 @@ async function entryFromOutput(slug) {
   return entry.cover || entry.images.length ? entry : null;
 }
 
-// slug → source folder, across every root ("glazed tiles" → "glazed-tiles").
+// slug → source folder, across every root ("glazed tiles" → "glazed-tiles"). Any other top-level
+// folder in media-src/ (e.g. media-src/Sketchbook) is its own collection, slug = folder name.
 const srcDirs = new Map();
+const gridSlugs = new Set(); // shown in Play grids → every image also gets a light "card" copy
 for (const root of SRC_ROOTS.filter((r) => existsSync(r))) {
-  for (const folder of await readdir(root)) srcDirs.set(slugify(folder), path.join(root, folder));
+  for (const folder of await readdir(root)) {
+    srcDirs.set(slugify(folder), path.join(root, folder));
+    if (root.endsWith("experiments")) gridSlugs.add(slugify(folder));
+  }
+}
+if (existsSync("media-src")) {
+  for (const folder of await readdir("media-src")) {
+    const full = path.join("media-src", folder);
+    if (SRC_ROOTS.includes(full.replace(/\\/g, "/")) || !(await stat(full)).isDirectory()) continue;
+    srcDirs.set(slugify(folder), full);
+    gridSlugs.add(slugify(folder));
+  }
 }
 const slugs = new Set([...srcDirs.keys(), ...(existsSync(OUT) ? await readdir(OUT) : [])]);
 for (const slug of [...slugs].sort(natural.compare)) {
@@ -85,8 +100,9 @@ for (const slug of [...slugs].sort(natural.compare)) {
     const bigGif = isGif && srcStat.size > BIG_GIF_BYTES;
     const outName = isGif && !bigGif ? `${base}.gif` : `${base}.webp`;
     const outPath = path.join(outDir, outName);
-    // Animated files also get a small "card" copy for grid thumbnails (Play masonry).
-    const cardName = isGif ? `${base}.card.webp` : null;
+    // GIFs, and every image in a Play collection, also get a light "card" copy for grid thumbnails;
+    // the full-quality file is what opens in the lightbox / case study.
+    const cardName = isGif || gridSlugs.has(slug) ? `${base}.card.webp` : null;
     const cardPath = cardName ? path.join(outDir, cardName) : null;
     keep.add(outName);
     if (cardName) keep.add(cardName);
@@ -104,8 +120,9 @@ for (const slug of [...slugs].sort(natural.compare)) {
           .toFile(outPath);
       }
       if (cardPath) {
-        await sharp(srcPath, { animated: true, limitInputPixels: false })
-          .resize({ width: CARD_WIDTH, withoutEnlargement: true })
+        await sharp(srcPath, { animated: isGif, limitInputPixels: false })
+          .rotate() // respect phone-photo orientation
+          .resize({ width: CARD_WIDTH_FOR[slug] ?? CARD_WIDTH, withoutEnlargement: true })
           .webp({ quality: CARD_QUALITY, effort: 5 })
           .toFile(cardPath);
       }

@@ -58,6 +58,8 @@ export type Project = {
   description: string;
   /** Small label after the title, e.g. "Internship" */
   tag?: string;
+  /** Chips on the Work card: what the project is about (UI/UX, Research, Game design…) */
+  tags?: string[];
   /** Card + hero image (16:9-ish, ~1920px wide) */
   cover?: string;
   /** Optional muted looping clip that replaces the cover on cards (mp4) */
@@ -78,6 +80,8 @@ export type Project = {
   caseStudyImages?: "stack" | "blocks";
   /** Case study body. Empty/omitted = popup only shows the summary. */
   blocks?: Block[];
-  /** Hide from the grid without deleting */
+  /** "draft" = visible locally only, never built for the live site (default "published") */
+  status?: import("./status").Status;
+  /** Hide everywhere, even locally, without deleting */
   hidden?: boolean;
 };

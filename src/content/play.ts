@@ -1,4 +1,5 @@
-import { pic } from "./media";
+import { mediaBySlug, pic } from "./media";
+import { isVisible, type Status } from "./status";
 
 /**
  * PLAY PAGE — sidebar + sectioned masonry gallery (same hierarchy as the reference's Art page).
@@ -16,7 +17,10 @@ export type PlayPiece = {
   src?: string;
   /** Bigger file for the lightbox (optional; falls back to src) */
   fullSrc?: string;
+  /** Caption under the piece; leave "" for no caption */
   title: string;
+  /** Description for screen readers when there's no title */
+  alt?: string;
   /** Grey text after the title: medium, year, tool… */
   meta?: string;
   /** width / height. 0.8 = 4:5 portrait (default), 1 = square, 1.5 = 3:2 landscape */
@@ -24,6 +28,8 @@ export type PlayPiece = {
 };
 
 export type PlaySection = {
+  /** "draft" = visible locally only (see status.ts) */
+  status?: Status;
   /** Anchor id, also used in the URL hash (#tiles-tool) */
   id: string;
   label: string;
@@ -31,6 +37,10 @@ export type PlaySection = {
   header?: "plain" | "ruled";
   /** Optional link at the right end of the header row (reference: "3D Gallery") */
   action?: { label: string; href: string };
+  /** Masonry columns on desktop: 3 (default) or 2 for bigger pieces like photos */
+  columns?: 2 | 3;
+  /** Don't download images until the visitor scrolls near (connection-aware; tap-to-load on slow data) */
+  deferred?: boolean;
   pieces: PlayPiece[];
 };
 
@@ -47,6 +57,18 @@ function piece(slug: string, file: string, title: string, meta?: string): PlayPi
   return { src: img.card ?? img.src, fullSrc: img.src, title, meta, aspect: img.width / img.height };
 }
 
+/**
+ * Every processed image in a folder (e.g. media-src/Sketchbook → "sketchbook"), in file order.
+ * Grid shows the light card copy; the lightbox opens the full-quality file.
+ * `titles` maps a processed file name (lowercase, dashes, no extension) to a caption; others get none.
+ */
+function collection(slug: string, alt: string, titles: Record<string, string> = {}): PlayPiece[] {
+  return (mediaBySlug[slug]?.images ?? []).map((img) => {
+    const name = img.src.split("/").pop()!.replace(/\.[^.]+$/, "");
+    return { src: img.card ?? img.src, fullSrc: img.src, title: titles[name] ?? "", alt, aspect: img.width / img.height };
+  });
+}
+
 /** Placeholder pieces with a mix of aspect ratios so the masonry is visible. */
 function placeholders(n: number, title = "Untitled"): PlayPiece[] {
   const aspects = [0.8, 1.25, 1, 0.75, 1.5, 0.8];
@@ -57,7 +79,7 @@ function placeholders(n: number, title = "Untitled"): PlayPiece[] {
   }));
 }
 
-export const playGroups: PlayGroup[] = [
+const allPlayGroups: PlayGroup[] = [
   {
     id: "experiments",
     label: "Experiments",
@@ -81,6 +103,7 @@ export const playGroups: PlayGroup[] = [
       },
       {
         id: "fractal-visualizer",
+        status: "draft",
         label: "Fractal Visualizer",
         action: { label: "Case study", href: "/play/fractal-visualizer/" },
         pieces: placeholders(6, "Fractal"),
@@ -88,18 +111,49 @@ export const playGroups: PlayGroup[] = [
     ],
   },
   {
+    // Single section with the same label → shows as one flat sidebar item.
+    id: "sketchbook",
+    label: "Sketchbook",
+    sections: [
+      {
+        id: "sketchbook",
+        label: "Sketchbook",
+        header: "ruled",
+        pieces: collection("sketchbook", "Sketchbook page", {
+          "alain-de": "Alain de",
+          frenchanda: "Frenchanda",
+          iloveslugs: "I love slugs",
+          "paar-e-taalab-1": "Paar-e-taalab",
+          piercebanana: "Pierce banana",
+        }),
+      },
+    ],
+  },
+  {
     id: "photography",
     label: "Photography",
+    // Single section with the same label → one flat sidebar item. Lowest on the page, so it loads lazily.
     sections: [
-      { id: "photo-series-1", label: "Series one", header: "ruled", pieces: placeholders(6, "Photo") },
-      { id: "photo-series-2", label: "Series two", header: "ruled", pieces: placeholders(6, "Photo") },
+      {
+        id: "photography",
+        label: "Photography",
+        header: "ruled",
+        columns: 2,
+        deferred: true,
+        pieces: collection("photography", "Photograph"),
+      },
     ],
   },
   {
     id: "fun",
     label: "Fun",
-    sections: [{ id: "fun", label: "Fun", header: "ruled", pieces: placeholders(6, "Doodle") }],
+    sections: [{ id: "fun", status: "draft", label: "Fun", header: "ruled", pieces: placeholders(6, "Doodle") }],
   },
 ];
+
+/** Groups with draft sections removed (on the live site); empty groups disappear. */
+export const playGroups: PlayGroup[] = allPlayGroups
+  .map((g) => ({ ...g, sections: g.sections.filter(isVisible) }))
+  .filter((g) => g.sections.length > 0);
 
 export const playSections = playGroups.flatMap((g) => g.sections);
