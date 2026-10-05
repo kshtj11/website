@@ -5,6 +5,7 @@ import clsx from "clsx";
 import type { Project } from "@/content/types";
 import { projectHref } from "@/content/projects";
 import MediaFrame from "../shared/MediaFrame";
+import FloatingScroll from "../shared/FloatingScroll";
 import { ArrowUpRight, CloseIcon, ExpandIcon } from "../shared/icons";
 import { MetadataRow, ProjectChip, ProjectLinks } from "../case-study/CaseStudyHero";
 
@@ -80,7 +81,7 @@ export default function PreviewModal({ project, onClose }: { project: Project; o
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <FloatingScroll>
           <div className="flex w-full flex-col items-start gap-5 px-44 pb-10 pt-20 max-lg:px-16 max-md:px-8">
             <div className="flex w-full flex-col gap-1.5">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -141,7 +142,7 @@ export default function PreviewModal({ project, onClose }: { project: Project; o
               ))}
             </div>
           ) : null}
-        </div>
+        </FloatingScroll>
       </div>
     </div>
   );
