@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { about } from "@/content/pages";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = { title: `About | ${site.name}` };
+export const metadata: Metadata = { title: `About | ${site.fullName}` };
 
 /**
  * Layout mirrors the reference: photo + bio side by side (stacked on mobile),
@@ -18,7 +18,7 @@ export default function AboutPage() {
       <div className="flex w-full flex-col items-start gap-20 px-16 pb-8 pt-2 max-md:px-6">
         <section className="flex w-full max-w-5xl flex-col items-center gap-10 md:flex-row md:items-start md:gap-16">
           <ScrollReveal delay={100} className="w-72 shrink-0 md:w-76">
-            <MediaFrame src={about.photo} alt={site.name} aspect="4/5" rounded="rounded-3xl" placeholderLabel="photo · 4:5" eager />
+            <MediaFrame src={about.photo} alt={site.fullName} aspect="4/5" rounded="rounded-3xl" placeholderLabel="photo · 4:5" eager />
             {about.photoCaption && (
               <p className="mt-3 text-sm leading-normal text-[var(--ink-subtle)]">{about.photoCaption}</p>
             )}

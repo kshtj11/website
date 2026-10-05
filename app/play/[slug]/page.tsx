@@ -14,7 +14,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProject("play", (await params).slug);
-  return project ? { title: `${project.title} | ${site.name}`, description: project.description } : {};
+  return project ? { title: `${project.title} | ${site.fullName}`, description: project.description } : {};
 }
 
 export default async function Page({ params }: Props) {

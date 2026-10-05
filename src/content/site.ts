@@ -14,7 +14,7 @@ export const site = {
   /** Single letter used by the placeholder logo until you drop in your own SVG. */
   monogram: "k",
   url: "https://kshtj.in",
-  title: "kshitij — portfolio", // browser tab + link previews
+  title: "Kshitij Ghag", // browser tab + link previews
   description: "Interaction designer. Portfolio of work, play, and experiments.", // PLACEHOLDER
 
   email: "hello@kshtj.in", // PLACEHOLDER — use an address that actually receives mail

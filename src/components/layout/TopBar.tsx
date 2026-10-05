@@ -3,11 +3,11 @@ import clsx from "clsx";
 import { navTabs, site, type NavTabId } from "@/content/site";
 
 /**
- * Top bar: name + role on the left, Work / Play / About + Résumé centred.
+ * Top bar: name + role on the left, Work / Play / About / Resume right-aligned to the page gutter.
  *   active tab   bold, brand pink
- *   Résumé       link blue, opens the Drive PDF in a new tab
+ *   Resume       same grey as the other links, opens the Drive PDF in a new tab
  *   sticky       only on Play and About (Work scrolls away with the hero)
- * Desktop: 3-column grid so the links sit in the true centre. Mobile: name row, links row.
+ * Desktop: links 32px apart. Mobile: name row, links row.
  */
 export default function TopBar({ activeTab }: { activeTab: NavTabId }) {
   const sticky = activeTab !== "work";
@@ -18,7 +18,7 @@ export default function TopBar({ activeTab }: { activeTab: NavTabId }) {
         sticky && "sticky top-0",
       )}
     >
-      <div className="grid w-full grid-cols-1 items-center gap-y-3 px-16 py-5 max-md:px-6 max-md:py-4 md:grid-cols-[1fr_auto_1fr]">
+      <div className="grid w-full grid-cols-1 items-center gap-y-3 px-16 py-5 max-md:px-6 max-md:py-4 md:grid-cols-[1fr_auto]">
         <Link href="/" className="flex flex-wrap items-baseline gap-x-3">
           <span className="t-strong text-[var(--ink-strong)]">{site.fullName}</span>
           <span className="t-card text-[var(--ink-subtle)]">{site.role}</span>
@@ -45,9 +45,9 @@ export default function TopBar({ activeTab }: { activeTab: NavTabId }) {
             href={site.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="t-card text-[var(--link-blue)] transition-opacity duration-200 hover:opacity-70"
+            className="t-card text-[var(--ink-muted)] transition-colors duration-200 hover:text-[var(--ink-strong)]"
           >
-            Résumé
+            Resume
           </a>
         </nav>
       </div>
