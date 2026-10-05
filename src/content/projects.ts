@@ -110,6 +110,8 @@ export const projects: Project[] = [
   },
 
   // ───────────────────────────── PLAY ─────────────────────────────
+  // These back the "Case study" links on the Play page (/play/<slug>/).
+  // The Play page itself (sidebar + galleries) is laid out in src/content/play.ts.
   {
     slug: "ixt",
     section: "play",
@@ -136,16 +138,7 @@ export const projects: Project[] = [
     // { type: "embed", url: "https://…", height: 560 }
     blocks: caseStudySkeleton(),
   },
-  {
-    slug: "fun-and-photography",
-    section: "play",
-    title: "Fun & Photography",
-    year: "Ongoing",
-    description: "Placeholder: photos and odds and ends.",
-    blocks: [
-      { type: "gallery", columns: 3, aspect: "4/5", images: Array.from({ length: 9 }, () => ({})) },
-    ],
-  },
+  // Photography and Fun don't need case studies; they live only in src/content/play.ts.
 ];
 
 export function projectsIn(section: Project["section"]) {
