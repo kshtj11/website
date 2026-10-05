@@ -14,7 +14,7 @@ function MoreProjects({ current }: { current: Project }) {
   return (
     <section className="flex w-full flex-col gap-6 px-8 pt-16">
       <div className="horizontal-line" />
-      <p className="text-lg tracking-wide text-[var(--ink-subtle)]">More {current.section}</p>
+      <p className="t-hero text-[var(--ink-subtle)]">More {current.section}</p>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {others.map((p, i) => (
           <ScrollReveal key={p.slug} delay={i * 80}>

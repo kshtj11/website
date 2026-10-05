@@ -20,7 +20,7 @@ function SectionHeader({ section }: { section: PlaySection }) {
     return (
       <div className="flex w-full flex-col gap-2">
         <div className="flex w-full items-center gap-3">
-          <p className="flex-1 text-base leading-normal tracking-wide text-zinc-400">{section.label}</p>
+          <p className="flex-1 t-card text-zinc-400">{section.label}</p>
           {action}
         </div>
         <div className="horizontal-line" />
@@ -31,7 +31,7 @@ function SectionHeader({ section }: { section: PlaySection }) {
   // Inset label, no rule (reference: Painting)
   return (
     <div className="flex w-full items-center gap-3">
-      <p className="ml-2 flex-1 text-base leading-normal tracking-wide text-zinc-400">{section.label}</p>
+      <p className="ml-2 flex-1 t-card text-zinc-400">{section.label}</p>
       {action}
     </div>
   );

@@ -109,7 +109,7 @@ export default function NavigationTabs({ activeTab }: { activeTab: NavTabId }) {
                 )}
                 <span
                   className={clsx(
-                    "text-lg font-medium leading-normal tracking-[0.005em] transition-colors duration-200 ease-out",
+                    "t-tab transition-colors duration-200 ease-out",
                     active ? "text-[var(--ink-body)]" : "text-[var(--ink-subtle)] group-hover:text-[var(--ink-body)]",
                   )}
                 >

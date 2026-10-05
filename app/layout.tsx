@@ -3,9 +3,15 @@ import { Hanken_Grotesk, Hind } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// Intro wordmark fonts. next/font downloads them at build time and serves them from this site.
-const hind = Hind({ weight: "700", subsets: ["devanagari", "latin"], variable: "--font-intro-hi", display: "swap" });
-const hanken = Hanken_Grotesk({ weight: "800", subsets: ["latin"], variable: "--font-intro-en", display: "swap" });
+// Site typefaces (downloaded at build time and served from this site):
+//   Hanken Grotesk — all Latin text · Hind — Devanagari (नमस्कार etc.)
+const hanken = Hanken_Grotesk({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-hanken",
+  display: "swap",
+});
+const hind = Hind({ weight: ["400", "500", "600", "700"], subsets: ["devanagari"], variable: "--font-hind", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -16,10 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${hind.variable} ${hanken.variable}`}>
-      <head>
-        <link rel="preload" href="/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
-      </head>
+    <html lang="en" className={`${hanken.variable} ${hind.variable}`}>
       <body>{children}</body>
     </html>
   );

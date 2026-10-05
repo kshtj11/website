@@ -26,7 +26,7 @@ export default function AboutPage() {
 
           <div className="flex max-w-xl flex-1 flex-col gap-6 md:pt-8">
             <ScrollReveal variant="fade" delay={150}>
-              <h2 className="text-3xl font-medium text-[var(--ink-body)]">{about.greeting}</h2>
+              <h2 className="t-section text-[var(--ink-body)]">{about.greeting}</h2>
             </ScrollReveal>
             <ScrollReveal variant="fade" delay={200}>
               <div className="flex flex-wrap gap-2 text-base tracking-[0.005em] text-[var(--ink-subtle)] md:gap-6">
@@ -47,12 +47,12 @@ export default function AboutPage() {
 
         <section className="flex w-full flex-col gap-16 md:flex-row md:justify-between md:gap-0">
           <ScrollReveal variant="fade">
-            <h2 className="text-3xl font-medium leading-normal text-[var(--ink)]">Experience</h2>
+            <h2 className="t-section text-[var(--ink)]">Experience</h2>
           </ScrollReveal>
           <div className="flex flex-col gap-10 md:w-1/2 md:shrink-0 md:gap-12 md:pt-1.5">
             {about.experience.map((e, i) => (
               <ScrollReveal key={e.org + e.years} delay={i * 80}>
-                <p className="text-base font-medium tracking-[0.005em] text-[var(--ink)] md:text-lg">
+                <p className="t-strong text-[var(--ink)] md:text-lg">
                   {e.role}, {e.org}
                   <span className="font-normal text-[var(--ink-subtle)]">, {e.years}</span>
                 </p>

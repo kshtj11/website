@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import clsx from "clsx";
 import type { PlayGroup } from "@/content/play";
 
-const LEAF_TEXT = "text-base font-medium leading-normal tracking-wide text-left transition-colors";
+const LEAF_TEXT = "t-label text-left transition-colors"; // Body/Label
 
 /** Height animates via grid-rows 0fr → 1fr (smooth, no max-height guessing). */
 function Expandable({ expanded, children }: { expanded: boolean; children: ReactNode }) {

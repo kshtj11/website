@@ -46,19 +46,26 @@ On desktop, clicking a card opens a **preview popup** and updates the URL. *Expa
 
 Figma frame suggestion: **1440 wide** desktop (gutter 64, content 1312) and **375 wide** mobile (gutter 24).
 
-## Type scale (Figtree)
+## Type scale (Hanken Grotesk + Hind)
 
-| Role | Size / weight | Color |
-| --- | --- | --- |
-| Name in header | 36px / 500, tracking 1.25% | zinc-700 `#3f3f46` |
-| Hero line | 18px / 400 (16px mobile), tracking wide | zinc-400 `#a1a1aa` |
-| Tabs | 18px / 500 | active zinc-600, idle zinc-400 |
-| Card title / meta | 16px / 400–500 | zinc-900 / zinc-400 |
-| Case-study title | 36px / 400 | zinc-900 |
-| Block heading | 24px / 400, relaxed | zinc-900 |
-| Body | 16px / 400, line-height 1.625 | zinc-600 `#52525b` |
-| Labels (facts row) | 16px / 500 | zinc-400 |
-| Footer name | 30px / 500 | zinc-700 |
+Hanken Grotesk sets all Latin text; Hind sets Devanagari (the browser switches per character).
+Each Figma text style has a matching class in `app/globals.css` — use the class, not loose size/weight utilities.
+
+| Figma style | Class | Font / weight | Size / line-height |
+| --- | --- | --- | --- |
+| Display/Intro | `t-intro` | Hanken ExtraBold | 48 / 1.2 (36 mobile) |
+| Display/Intro Devanagari | `t-intro-deva` | Hind Bold, brand gradient | 48 / 1.2 (36 mobile) |
+| Display/Title | `t-title` | Hanken SemiBold | 36 / 1.2 |
+| Heading/Section | `t-section` | Hanken SemiBold | 30 / 1.25 |
+| Heading/Block | `t-block` | Hanken SemiBold | 24 / 1.35 |
+| Body/Hero | `t-hero` | Hanken Regular | 18 / 1.5 (16 mobile) |
+| Body/Tab | `t-tab` | Hanken Medium | 18 / 1.4 |
+| Body/Default | `t-body` | Hanken Regular | 16 / 1.6 |
+| Body/Card | `t-card` | Hanken Regular | 16 / 1.4 |
+| Body/Label | `t-label` | Hanken Medium | 16 / 1.4 |
+| Body/Strong | `t-strong` | Hanken SemiBold | 16 / 1.4 |
+| Caption | `t-caption` | Hanken Regular | 14 / 1.4 |
+| Micro | `t-micro` | Hanken Medium, +4% tracking | 12 / 1.4 |
 
 ## Media sizes
 

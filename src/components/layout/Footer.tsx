@@ -64,7 +64,7 @@ function Brand() {
   return (
     <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80 max-md:gap-2">
       <Logo className="size-7 text-[18px]" />
-      <span className="text-3xl font-medium leading-normal text-[var(--ink)]">{site.name}</span>
+      <span className="t-section text-[var(--ink)]">{site.name}</span>
     </Link>
   );
 }
@@ -142,7 +142,7 @@ export default function Footer() {
           <a href={site.repoUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-600">
             <TextScramble
               text={`CHANGELOG: ${changelog ?? "..."}`}
-              className="text-nowrap text-xs leading-normal tracking-wider text-[var(--ink-subtle)]"
+              className="t-micro text-nowrap text-[var(--ink-subtle)]"
             />
           </a>
         </ScrollReveal>

@@ -107,7 +107,7 @@ export default function MediaFrame({
         )}
       />
       {!hasMedia && placeholderLabel && (
-        <p className="absolute inset-0 z-30 flex items-center justify-center text-sm tracking-wide text-zinc-400">
+        <p className="absolute inset-0 z-30 flex items-center justify-center t-caption text-zinc-400">
           {placeholderLabel}
         </p>
       )}

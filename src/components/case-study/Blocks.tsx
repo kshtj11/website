@@ -7,7 +7,7 @@ import { ScrollReveal } from "../shared/ScrollReveal";
  * Reading rhythm (from the reference):
  *   column     max-w-[800px], centered, px-8 inside
  *   blocks     py-10 for media, py-16 for chapter titles
- *   headings   text-2xl relaxed, zinc-900
+ *   headings   t-block (Heading/Block, 24px SemiBold), zinc-900
  *   body       text-base, zinc-600, paragraphs 24px apart, max ~480px measure
  */
 
@@ -59,8 +59,8 @@ function BlockView({ block }: { block: Block }) {
     case "sectionTitle":
       return (
         <ScrollReveal variant="fade" className="flex w-full flex-col gap-3 px-8 py-16">
-          {block.number && <p className="text-base font-medium tracking-wider text-[var(--ink-subtle)]">{block.number}</p>}
-          <h2 className="text-4xl leading-normal text-[var(--ink-strong)] max-md:text-3xl">{block.title}</h2>
+          {block.number && <p className="t-label text-[var(--ink-subtle)]">{block.number}</p>}
+          <h2 className="t-title text-[var(--ink-strong)] max-md:text-3xl">{block.title}</h2>
           {block.subtitle && <p className="max-w-[480px] text-lg leading-normal text-[var(--ink-muted)]">{block.subtitle}</p>}
         </ScrollReveal>
       );
@@ -74,7 +74,7 @@ function BlockView({ block }: { block: Block }) {
             block.heading && "grid grid-cols-[1fr_2fr] gap-10 max-md:flex max-md:flex-col max-md:gap-4",
           )}
         >
-          {block.heading && <h3 className="text-2xl leading-relaxed text-[var(--ink-strong)]">{block.heading}</h3>}
+          {block.heading && <h3 className="t-block text-[var(--ink-strong)]">{block.heading}</h3>}
           <div className="max-w-[480px]">
             <Paragraphs body={block.body} />
           </div>
@@ -110,7 +110,7 @@ function BlockView({ block }: { block: Block }) {
           )}
         >
           <div className="flex flex-1 flex-col gap-4">
-            {block.heading && <h3 className="text-2xl leading-relaxed text-[var(--ink-strong)]">{block.heading}</h3>}
+            {block.heading && <h3 className="t-block text-[var(--ink-strong)]">{block.heading}</h3>}
             <Paragraphs body={block.body} />
           </div>
           <Figure media={block.image} aspect="4/5" className="flex-1" />
@@ -121,7 +121,7 @@ function BlockView({ block }: { block: Block }) {
       return (
         <ScrollReveal variant="fade" className="w-full px-8 py-10">
           <blockquote className="flex flex-col gap-4 rounded-3xl bg-zinc-50 px-10 py-10 max-md:px-6">
-            <p className="text-2xl leading-relaxed text-[var(--ink-strong)]">&ldquo;{block.quote}&rdquo;</p>
+            <p className="t-block text-[var(--ink-strong)]">&ldquo;{block.quote}&rdquo;</p>
             {(block.author || block.role) && (
               <footer className="text-base text-[var(--ink-subtle)]">
                 {block.author}
@@ -173,7 +173,7 @@ function BlockView({ block }: { block: Block }) {
         <div className="flex w-full flex-col gap-6 px-8 py-10">
           {block.title && (
             <ScrollReveal variant="fade">
-              <h3 className="text-2xl leading-relaxed text-[var(--ink-strong)]">{block.title}</h3>
+              <h3 className="t-block text-[var(--ink-strong)]">{block.title}</h3>
             </ScrollReveal>
           )}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

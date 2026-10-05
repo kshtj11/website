@@ -56,7 +56,7 @@ export function ProjectLinks({ links }: { links?: Project["links"] }) {
 
 /**
  * Case-study hero inside the 800px reading column:
- *   logo 80×80 → title text-4xl → facts row (gap-5) → links → hairline → cover.
+ *   logo 80×80 → title t-title → facts row (gap-5) → links → hairline → cover.
  * Each step fades in 80ms after the last.
  */
 export default function CaseStudyHero({ project }: { project: Project }) {
@@ -72,10 +72,10 @@ export default function CaseStudyHero({ project }: { project: Project }) {
       <div className="flex w-full flex-col items-start gap-10">
         <ScrollReveal variant="fade" delay={80}>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <h1 className="text-4xl font-normal leading-normal text-[var(--ink-strong)]">{project.title}</h1>
+            <h1 className="t-title text-[var(--ink-strong)]">{project.title}</h1>
             <ProjectChip chip={project.chip} />
           </div>
-          <p className="mt-2 text-lg leading-normal text-[var(--ink-subtle)]">{project.description}</p>
+          <p className="t-hero mt-2 text-[var(--ink-subtle)]">{project.description}</p>
         </ScrollReveal>
 
         {project.metadata && (

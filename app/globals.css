@@ -29,42 +29,11 @@
   --background: #ffffff;
 }
 
-/* Figtree variable font (SIL Open Font License), self-hosted */
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 300 900;
-  font-display: swap;
-  src: url("/fonts/figtree-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+20B9, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 300 900;
-  font-display: swap;
-  src: url("/fonts/figtree-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: italic;
-  font-weight: 300 900;
-  font-display: swap;
-  src: url("/fonts/figtree-italic-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+20B9, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: italic;
-  font-weight: 300 900;
-  font-display: swap;
-  src: url("/fonts/figtree-italic-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
 @theme {
-  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  /* Hanken Grotesk for Latin, Hind for Devanagari: the browser picks Hind per character
+     for anything Hanken can't draw. Both are loaded by next/font in app/layout.tsx. */
+  --font-sans: var(--font-hanken), var(--font-hind), ui-sans-serif, system-ui, sans-serif;
+  --font-devanagari: var(--font-hind), var(--font-hanken), sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   /* Shadow scale (≤6). Prefer these over arbitrary shadow-[…] values. */
@@ -230,6 +199,25 @@ body {
    COMPONENT RECIPES
    ========================================================================== */
 @layer components {
+  /* ── Type roles: 1:1 with the Figma text styles (🎨 Foundations) ── */
+  .t-intro { font-size: 48px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 800; } /* Display/Intro */
+  .t-intro-deva { font-family: var(--font-devanagari); font-size: 48px; line-height: 1.2; font-weight: 700; } /* Display/Intro Devanagari */
+  .t-title { font-size: 36px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 600; } /* Display/Title */
+  .t-section { font-size: 30px; line-height: 1.25; letter-spacing: -0.005em; font-weight: 600; } /* Heading/Section */
+  .t-block { font-size: 24px; line-height: 1.35; letter-spacing: -0.005em; font-weight: 600; } /* Heading/Block */
+  .t-hero { font-size: 18px; line-height: 1.5; font-weight: 400; } /* Body/Hero */
+  .t-tab { font-size: 18px; line-height: 1.4; font-weight: 500; } /* Body/Tab */
+  .t-body { font-size: 16px; line-height: 1.6; font-weight: 400; } /* Body/Default */
+  .t-card { font-size: 16px; line-height: 1.4; font-weight: 400; } /* Body/Card */
+  .t-label { font-size: 16px; line-height: 1.4; font-weight: 500; } /* Body/Label */
+  .t-strong { font-size: 16px; line-height: 1.4; font-weight: 600; } /* Body/Strong */
+  .t-caption { font-size: 14px; line-height: 1.4; font-weight: 400; } /* Caption */
+  .t-micro { font-size: 12px; line-height: 1.4; letter-spacing: 0.04em; font-weight: 500; } /* Micro */
+  @media (max-width: 767px) {
+    .t-intro, .t-intro-deva { font-size: 36px; }
+    .t-hero { font-size: 16px; }
+  }
+
   .inline-link {
     border-radius: 0.125rem;
     color: inherit;
