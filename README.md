@@ -21,6 +21,7 @@ You never need to touch components to change content. Everything lives in `src/c
 | `src/content/site.ts` | Name, email, city/timezone (footer clock), social links, tab order |
 | `src/content/pages.tsx` | Hero line under your name on each tab, About page bio + experience |
 | `src/content/projects.ts` | Every project: grid order, card text, case-study blocks |
+| `src/content/play.ts` | Play page: sidebar groups → sections → gallery pieces |
 | `app/globals.css` (top) | Brand tokens: gradient stops, accent color, neutral ramp |
 
 Images go in `public/projects/<slug>/` and are referenced as `"/projects/<slug>/cover.jpg"`.

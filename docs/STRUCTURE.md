@@ -6,7 +6,7 @@ Reference for designing in Figma and editing code. Values are the ones the code 
 
 ```
 /                         Work tab
-/play/                    Play tab
+/play/                    Play tab (sidebar + sectioned masonry, see below)
 /about/                   About tab
 /work/<slug>/             Work case study (full page)
 /play/<slug>/             Play case study (full page)
@@ -110,3 +110,21 @@ All of it respects `prefers-reduced-motion`.
 - **No image optimization.** Pages has no image resizing service, so export images at the sizes above and compress them (WebP/AVIF, under ~400 KB each). Videos should be short muted MP4s under ~5 MB, or YouTube embeds.
 - **100 MB per file and ~1 GB per site** are GitHub's limits. Keep large videos on YouTube/Vimeo.
 - **Placeholder logo.** The monogram in `src/components/shared/Logo.tsx` is a stand-in for your mark.
+
+## Play page (same hierarchy as the reference's Art page)
+
+```
+Group     sidebar heading            "Experiments"   (expands while one of its sections is on screen)
+  Section   sidebar child + gallery  "Tiles Tool 9"  (count = number of pieces; active = blue)
+    Piece   image + caption          opens a lightbox on click
+```
+
+- Defined in `src/content/play.ts`. A group with one same-named section shows as a single sidebar item ("Fun").
+- Layout: 202px sticky sidebar + 16px gap + content column; sections 48px apart; header → gallery 12px.
+- Gallery: 3-column CSS masonry at ≥1024px (16px gutters), 2-column grid below. The sidebar is hidden under 1024px.
+- Section headers: `plain` (inset label) or `ruled` (label + hairline), with an optional right-aligned action link (e.g. "Case study ↗" → `/play/<slug>/`).
+- Scroll-spy: a section becomes active when its top passes 250px from the top of the window.
+
+## Figma
+
+Design file: https://www.figma.com/design/npYpF5sdmcdMv1Ht3xl8zU — pages: Read me · Foundations (live variables/styles) · Components · Desktop 1440 · Mobile 375. Every component has a note naming the code file it maps to.
