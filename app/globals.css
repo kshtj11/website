@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   BRAND TOKENS — change these to retheme the whole site.
+   ========================================================================== */
+:root {
+  /* Header gradient stops (top-right → fades to white) */
+  --brand-grad-1: #d5e0ff;
+  --brand-grad-2: #e2eaff;
+  --brand-grad-3: #f5e2ff;
+  --brand-grad-4: #fde9fa;
+  --brand-grad-5: #fff5fc;
+  --brand-grad-6: #fffeff;
+
+  /* Accent (links, primary buttons, text selection) */
+  --brand-accent: #3b82f6; /* blue-500 */
+  --brand-accent-hover: #60a5fa; /* blue-400 */
+  --brand-accent-border: #60a5fa;
+  --brand-accent-soft: #dbeafe; /* blue-100 */
+
+  /* Neutral ramp (zinc) */
+  --ink-strong: #18181b; /* zinc-900: titles */
+  --ink: #3f3f46; /* zinc-700: name, hero links */
+  --ink-body: #52525b; /* zinc-600: body copy */
+  --ink-muted: #71717a; /* zinc-500 */
+  --ink-subtle: #a1a1aa; /* zinc-400: secondary text, years */
+  --line: #f4f4f5; /* zinc-100: hairlines */
+  --placeholder: #e4e4e7; /* zinc-200: media placeholder */
+
+  --background: #ffffff;
+}
+
+/* Figtree variable font (SIL Open Font License), self-hosted */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/figtree-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+20B9, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/figtree-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/figtree-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+20B9, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/figtree-italic-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@theme {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Shadow scale (≤6). Prefer these over arbitrary shadow-[…] values. */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-default: 0px 4px 16px 0px rgba(212, 212, 216, 0.65);
+  --shadow-media: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glass: 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.02);
+}
+
+/* ==========================================================================
+   SQUIRCLE CORNERS (Chrome 139+). Other browsers keep normal border-radius.
+   Squircles look smaller, so radii are bumped ~1.7x to keep perceived size.
+   ========================================================================== */
+@supports (corner-shape: squircle) {
+  *, *::before, *::after { corner-shape: squircle; }
+  .rounded-full, .button { corner-shape: round; }
+  .rounded-xl { border-radius: 20px; }
+  .rounded-2xl { border-radius: 27px; }
+  .rounded-3xl { border-radius: 41px; }
+  .rounded-\[26px\] { border-radius: 44px; }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+html {
+  font-family: var(--font-sans);
+  background: var(--background);
+}
+body {
+  background: var(--background);
+  color: var(--ink-strong);
+  overflow-x: clip; /* clip (not hidden) keeps position: sticky working */
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  color: var(--brand-accent);
+  background: var(--brand-accent-soft);
+}
+*:focus-visible {
+  outline: 2px solid #d4d4d8;
+  outline-offset: 2px;
+}
+
+/* Soft white fade pinned to the top of the viewport (desktop) */
+@media (min-width: 768px) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 8rem;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.369) 19%, hsla(0, 0%, 100%, 0.271) 34%, hsla(0, 0%, 100%, 0.191) 47%, hsla(0, 0%, 100%, 0.139) 56.5%, hsla(0, 0%, 100%, 0.097) 65%, hsla(0, 0%, 100%, 0.063) 73%, hsla(0, 0%, 100%, 0.038) 80.2%, hsla(0, 0%, 100%, 0.021) 86.1%, hsla(0, 0%, 100%, 0.011) 91%, hsla(0, 0%, 100%, 0.004) 95.2%, hsla(0, 0%, 100%, 0.001) 98.2%, hsla(0, 0%, 100%, 0) 100%);
+    pointer-events: none;
+    z-index: 40;
+  }
+}
+
+/* ==========================================================================
+   HEADER GRADIENT + GRAIN
+   ========================================================================== */
+@keyframes gradient-bg {
+  0% { background-position: 0% 49%; }
+  50% { background-position: 30% 51%; }
+  100% { background-position: 0% 49%; }
+}
+.header-gradient {
+  background: linear-gradient(190deg, var(--brand-grad-1) 0%, var(--brand-grad-1) 8%, var(--brand-grad-2) 15%, var(--brand-grad-3) 22%, var(--brand-grad-4) 28%, var(--brand-grad-5) 35%, var(--brand-grad-6) 42%, #ffffff 55%, #ffffff 100%);
+  background-size: 120% 120%;
+  animation: gradient-bg 8s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+/* Procedural film grain (SVG noise) — no image asset needed */
+.header-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   ENTRANCE + MOTION KEYFRAMES
+   ========================================================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp 400ms ease-out both; }
+
+/* Cards + hero copy enter as one unit on first paint */
+@keyframes projectCardEnter {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.project-card {
+  animation: projectCardEnter 450ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.hero-copy {
+  animation: projectCardEnter 360ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Card caption slides up on hover (desktop) */
+@media (min-width: 768px) {
+  .project-card .project-hover-text {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+  .project-card:hover .project-hover-text,
+  .project-card:focus-visible .project-hover-text {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading shimmer for media placeholders */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(105deg, #e4e4e7 0%, #e4e4e7 28%, #ececee 40%, #f4f4f5 46%, #fafafa 50%, #f4f4f5 54%, #ececee 60%, #e4e4e7 72%, #e4e4e7 100%);
+  background-size: 220% 100%;
+  animation: shimmer 2.2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL — paired with <ScrollReveal>, which adds `.revealed`
+   ========================================================================== */
+.scroll-reveal,
+.scroll-reveal-fast,
+.scroll-reveal-fade {
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-timing-function: ease-out;
+  backface-visibility: hidden;
+}
+.scroll-reveal { transform: translate3d(0, 20px, 0); transition-duration: 0.5s; }
+.scroll-reveal-fast { transform: translate3d(0, 12px, 0); transition-duration: 0.65s; }
+.scroll-reveal-fade { transform: translate3d(0, 12px, 0); transition-duration: 0.3s; }
+.scroll-reveal.revealed,
+.scroll-reveal-fast.revealed,
+.scroll-reveal-fade.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card, .hero-copy, .animate-fade-up, .header-gradient { animation: none; }
+  .scroll-reveal, .scroll-reveal-fast, .scroll-reveal-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   COMPONENT RECIPES
+   ========================================================================== */
+@layer components {
+  .inline-link {
+    border-radius: 0.125rem;
+    color: inherit;
+    transition: color 200ms ease-out;
+  }
+  .inline-link:hover,
+  .inline-link:focus-visible {
+    color: var(--brand-accent);
+  }
+
+  .horizontal-line {
+    height: 1px;
+    width: 100%;
+    background-color: var(--line);
+  }
+
+  /* Buttons: <a className="button primary md"> */
+  .button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: nowrap;
+    transition: background-color 200ms ease-out, border-color 200ms ease-out, color 200ms ease-out;
+  }
+  .button.sm { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
+  .button.md { padding: 0.375rem 1rem; font-size: 1rem; }
+  .button.primary {
+    border-color: var(--brand-accent-border);
+    background-color: var(--brand-accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .button.primary:hover {
+    background-color: var(--brand-accent-hover);
+  }
+  .button.secondary {
+    border-color: #e4e4e7;
+    background-color: #fafafa;
+    color: var(--ink);
+  }
+  .button.secondary:hover {
+    background-color: rgb(24 24 27 / 0.05);
+  }
+}
