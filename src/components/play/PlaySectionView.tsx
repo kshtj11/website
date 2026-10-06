@@ -49,9 +49,10 @@ function PieceCard({ piece, onOpen, loaded = true }: { piece: PlayPiece; onOpen:
       className="group flex w-full cursor-pointer flex-col items-start gap-2 text-left"
     >
       <div className="w-full transition-transform duration-300 group-hover:scale-[0.99]">
-        {/* Until a deferred section is ready, only the sized shimmer box renders (no download). */}
+        {/* Until a deferred section is ready, only its quadtree placeholder renders (no download). */}
         <MediaFrame
           src={loaded ? piece.src : undefined}
+          loader="quadtree"
           qtSrc={piece.src}
           alt={piece.alt ?? piece.title}
           aspect={String(piece.aspect ?? 0.8)}

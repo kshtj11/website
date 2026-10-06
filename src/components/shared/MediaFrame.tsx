@@ -16,15 +16,17 @@ type MediaFrameProps = {
   /** Text shown inside the placeholder when there's no src yet */
   placeholderLabel?: string;
   eager?: boolean;
-  /** Image whose quadtree to show while there's no src yet (e.g. a deferred Play section) */
+  /** Loading placeholder: grey shimmer (default) or the image's colour quadtree (Play grid) */
+  loader?: "shimmer" | "quadtree";
+  /** Quadtree loader only: image whose quadtree to show while there's no src yet (deferred sections) */
   qtSrc?: string;
 };
 
 export const CARD_ASPECT = "678/367.625";
 
 /**
- * Fixed-aspect media box: quadtree placeholder (or shimmer, if the image has none) while loading,
- * image/video crossfade once ready. Images already in the browser cache skip the animation.
+ * Fixed-aspect media box: shimmer (or, with loader="quadtree", the image's colour quadtree) while
+ * loading, then image/video crossfade. Cached images skip the quadtree animation.
  * Without a src it stays a labelled placeholder, which keeps layouts honest while drafting.
  */
 export default function MediaFrame({
@@ -36,6 +38,7 @@ export default function MediaFrame({
   className,
   placeholderLabel,
   eager = false,
+  loader = "shimmer",
   qtSrc,
 }: MediaFrameProps) {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -44,7 +47,7 @@ export default function MediaFrame({
   const [nearViewport, setNearViewport] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [cached, setCached] = useState(false);
-  const qtKey = quadtreeFor(src ?? qtSrc);
+  const qtKey = loader === "quadtree" ? quadtreeFor(src ?? qtSrc) : undefined;
 
   useEffect(() => {
     if (imgRef.current?.complete && imgRef.current.naturalWidth > 0) {

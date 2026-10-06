@@ -102,7 +102,7 @@ Everything is CSS transitions/keyframes plus a few small observers. **No animati
 | Card hover | media `scale(0.99)`, caption rises 8px + fades in | 300ms ease-out |
 | Tab indicator | glass pill glides to the new tab, **then** the page changes | 300ms ease-out |
 | Scroll reveal | `<ScrollReveal>`: slide 20px/500ms · fade 12px/300ms | fires once at viewport edge |
-| Media load | colour quadtree (QuadtreeLoader): big squares → small, 160ms eased crossfade per level, then 500ms fade to the image; cached images skip it; shimmer only when an image has no quadtree | |
+| Media load | grey shimmer → 500ms crossfade (default). Play grid only (loader="quadtree"): colour quadtree (QuadtreeLoader): big squares → small, 160ms eased crossfade per level, then 500ms fade to the image; cached images skip it | |
 | Popup | overlay fade; panel rises 32px → 0; exit drops to 16px | 300ms |
 | Sticky case-study header | logo 44 → 28px, padding 32 → 16px after 24px scroll | 300ms |
 | Footer | clock colon blinks (1.2s); changelog text scrambles on view/hover | |

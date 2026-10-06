@@ -10,7 +10,8 @@ export default function TabPage({ tab, children }: { tab: NavTabId; children: Re
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center bg-white">
       <TopBar activeTab={tab} />
-      <PageHeader variant={tab} title={heroTitle[tab]}>
+      {/* Only Play gets the animated block title */}
+      <PageHeader variant={tab} title={heroTitle[tab]} motion={tab === "play"}>
         {heroCopy[tab]}
       </PageHeader>
       {children}
