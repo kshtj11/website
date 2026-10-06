@@ -53,8 +53,8 @@ What's still borrowed from the reference: the Work / Art / About pill tabs with 
   - [ ] Favicon versions at 32 and 16 px
   - [ ] Export SVG → send · Me: swap into `Logo.tsx` + favicon
 - [x] **2. Type pairing** — done: Hanken Grotesk + Hind everywhere (Figtree removed)
-  - [ ] Decide: keep Figtree for body, or move body/UI to Hanken Grotesk to match the intro
-  - [ ] If changing, update the 🎨 Foundations text styles · Me: swap fonts sitewide
+  - [x] Body/UI moved to Hanken Grotesk
+  - [x] 🎨 Foundations text styles + site fonts updated
 - [ ] **3. Hero lines** — You
   - [x] Play/About headers are now page titles ("Play", "About me"); About has no line (space kept)
   - [ ] Real copy for the Work line and the Play line (Play is a placeholder) — ≤ 2 lines at 375 px
