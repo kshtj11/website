@@ -52,11 +52,12 @@ What's still borrowed from the reference: the Work / Art / About pill tabs with 
   - [ ] Final mark inside the 🧩 Logo component at 44 × 44; check it still reads at 28 px
   - [ ] Favicon versions at 32 and 16 px
   - [ ] Export SVG → send · Me: swap into `Logo.tsx` + favicon
-- [ ] **2. Type pairing** — You + Me
+- [x] **2. Type pairing** — done: Hanken Grotesk + Hind everywhere (Figtree removed)
   - [ ] Decide: keep Figtree for body, or move body/UI to Hanken Grotesk to match the intro
   - [ ] If changing, update the 🎨 Foundations text styles · Me: swap fonts sitewide
 - [ ] **3. Hero lines** — You
-  - [ ] One line each for Work, Play, About (≤ 2 lines at 375 px)
+  - [x] Play/About headers are now page titles ("Play", "About me"); About has no line (space kept)
+  - [ ] Real copy for the Work line and the Play line (Play is a placeholder) — ≤ 2 lines at 375 px
 - [ ] **4. Share image** — You
   - [ ] 1200 × 630 image for link previews (WhatsApp, LinkedIn, X) · Me: wire into metadata
 

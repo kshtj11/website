@@ -15,7 +15,7 @@ Reference for designing in Figma and editing code. Values are the ones the code 
 Every tab page uses the same shell (`src/components/layout/TabPage.tsx`):
 
 ```
-PageHeader        gradient + grain, logo, name, hero line
+PageHeader        Work: नमस्कार intro · Play/About: page title (heroTitle) · line under it (empty keeps its space)
 NavigationTabs    Work · Play · About pills + hairline
 <content>         project grid, or About sections
 Footer            brand + live clock · nav · contact + socials · changelog stamp
@@ -102,7 +102,7 @@ Everything is CSS transitions/keyframes plus a few small observers. **No animati
 | Card hover | media `scale(0.99)`, caption rises 8px + fades in | 300ms ease-out |
 | Tab indicator | glass pill glides to the new tab, **then** the page changes | 300ms ease-out |
 | Scroll reveal | `<ScrollReveal>`: slide 20px/500ms · fade 12px/300ms | fires once at viewport edge |
-| Media load | shimmer sweep until the image decodes, then a 500ms crossfade | |
+| Media load | colour quadtree (QuadtreeLoader): big squares → small, 160ms eased crossfade per level, then 500ms fade to the image; cached images skip it; shimmer only when an image has no quadtree | |
 | Popup | overlay fade; panel rises 32px → 0; exit drops to 16px | 300ms |
 | Sticky case-study header | logo 44 → 28px, padding 32 → 16px after 24px scroll | 300ms |
 | Footer | clock colon blinks (1.2s); changelog text scrambles on view/hover | |
@@ -122,7 +122,7 @@ All of it respects `prefers-reduced-motion`.
 ```
 Group     sidebar heading            "Experiments"   (expands while one of its sections is on screen)
   Section   sidebar child + gallery  "Tiles Tool 9"  (count = number of pieces; active = blue)
-    Piece   image + caption          opens a lightbox on click
+    Piece   image + caption          opens a lightbox on click (‹ › / ← → / swipe step through the section; 80dvh tall, scales with the screen)
 ```
 
 - Defined in `src/content/play.ts`. A group with one same-named section shows as a single sidebar item ("Sketchbook").

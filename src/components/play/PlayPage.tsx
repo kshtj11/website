@@ -15,7 +15,8 @@ const SPY_LINE = 250;
  */
 export default function PlayPage() {
   const [activeId, setActiveId] = useState(playSections[0]?.id ?? "");
-  const [openPiece, setOpenPiece] = useState<PlayPiece | null>(null);
+  // Lightbox: the opened section's viewable pieces + which one is showing (null = closed).
+  const [open, setOpen] = useState<{ pieces: PlayPiece[]; index: number | null }>({ pieces: [], index: null });
   const clickLock = useRef<number | null>(null);
 
   // Scroll spy: the last section whose top is above the spy line wins.
@@ -55,11 +56,23 @@ export default function PlayPage() {
 
       <div className="flex w-full min-w-0 flex-1 flex-col items-start gap-12 pb-8">
         {playSections.map((section) => (
-          <PlaySectionView key={section.id} section={section} onOpen={(p) => p.src && setOpenPiece(p)} />
+          <PlaySectionView
+            key={section.id}
+            section={section}
+            onOpen={(p) => {
+              const pieces = section.pieces.filter((x) => x.src);
+              if (p.src) setOpen({ pieces, index: pieces.indexOf(p) });
+            }}
+          />
         ))}
       </div>
 
-      <Lightbox piece={openPiece} onClose={() => setOpenPiece(null)} />
+      <Lightbox
+        pieces={open.pieces}
+        index={open.index}
+        onIndexChange={(index) => setOpen((o) => ({ ...o, index }))}
+        onClose={() => setOpen((o) => ({ ...o, index: null }))}
+      />
     </div>
   );
 }

@@ -1,10 +1,18 @@
 import type { ReactNode } from "react";
 
 /**
- * Per-page copy: the hero line under your name on each tab, plus the About page.
+ * Per-page copy: each tab's header (title + the line under it), plus the About page.
  * All text here is PLACEHOLDER.
  */
 
+/** Header title per tab. null = the नमस्कार, I'm Kshitij Ghag intro (Work). */
+export const heroTitle: Record<"work" | "play" | "about", string | null> = {
+  work: null,
+  play: "Play",
+  about: "About me",
+};
+
+/** Line under the title. null = no line (its space is kept so headers line up across tabs). */
 export const heroCopy: Record<"work" | "play" | "about", ReactNode> = {
   work: (
     <>
@@ -13,8 +21,8 @@ export const heroCopy: Record<"work" | "play" | "about", ReactNode> = {
       Currently: placeholder line about what you&apos;re doing now.
     </>
   ),
-  play: <>Side projects, tools, and experiments made for fun.</>,
-  about: <>A bit more about me.</>,
+  play: <>Experiments, sketchbook pages and photographs — the things I make between projects.</>,
+  about: null,
 };
 
 export const about = {

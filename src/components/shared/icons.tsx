@@ -42,3 +42,19 @@ export function MoonIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function ChevronLeft({ size = "18px", className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 18 18" fill="none" className={className} aria-hidden="true">
+      <path d="M11 4L6 9L11 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function ChevronRight({ size = "18px", className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 18 18" fill="none" className={className} aria-hidden="true">
+      <path d="M7 4L12 9L7 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
