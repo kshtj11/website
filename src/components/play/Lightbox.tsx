@@ -9,7 +9,7 @@ import { CloseIcon } from "../shared/icons";
 const EXIT_MS = 200;
 
 /**
- * Full-view of one piece. Frosted zinc-100/95 backdrop, image ≤ 75vh with radius 16 + elevated shadow,
+ * Full-view of one piece. Frosted zinc-100/95 backdrop, image ≤ 88vh / 1000px with radius 16 + elevated shadow,
  * caption underneath. Click outside / Esc / × closes. Enter: fade 200ms + scale 0.95 → 1 (280ms).
  */
 export default function Lightbox({ piece, onClose }: { piece: PlayPiece | null; onClose: () => void }) {
@@ -62,7 +62,7 @@ export default function Lightbox({ piece, onClose }: { piece: PlayPiece | null; 
       <figure
         onClick={(e) => e.stopPropagation()}
         className={clsx(
-          "relative z-10 flex max-w-[min(96vw,1100px)] flex-col items-center gap-3",
+          "relative z-10 flex max-w-[min(96vw,1400px)] flex-col items-center gap-3",
           closing ? "scale-95 transition-transform duration-200" : "animate-[scaleIn_280ms_cubic-bezier(0.16,1,0.3,1)]",
         )}
       >
@@ -73,7 +73,7 @@ export default function Lightbox({ piece, onClose }: { piece: PlayPiece | null; 
           <img
             src={piece.src}
             alt={piece.alt ?? piece.title}
-            className="max-h-[min(75vh,820px)] w-auto max-w-full rounded-2xl object-contain shadow-elevated"
+            className="max-h-[min(88vh,1000px)] w-auto max-w-full rounded-2xl object-contain shadow-elevated"
           />
           {piece.fullSrc && piece.fullSrc !== piece.src && (
             // eslint-disable-next-line @next/next/no-img-element

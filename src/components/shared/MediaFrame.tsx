@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import QuadtreeLoader, { quadtreeFor } from "./QuadtreeLoader";
 
 type MediaFrameProps = {
   src?: string;
@@ -15,12 +16,15 @@ type MediaFrameProps = {
   /** Text shown inside the placeholder when there's no src yet */
   placeholderLabel?: string;
   eager?: boolean;
+  /** Image whose quadtree to show while there's no src yet (e.g. a deferred Play section) */
+  qtSrc?: string;
 };
 
 export const CARD_ASPECT = "678/367.625";
 
 /**
- * Fixed-aspect media box: shimmer while loading, image/video crossfade once ready.
+ * Fixed-aspect media box: quadtree placeholder (or shimmer, if the image has none) while loading,
+ * image/video crossfade once ready. Images already in the browser cache skip the animation.
  * Without a src it stays a labelled placeholder, which keeps layouts honest while drafting.
  */
 export default function MediaFrame({
@@ -32,15 +36,21 @@ export default function MediaFrame({
   className,
   placeholderLabel,
   eager = false,
+  qtSrc,
 }: MediaFrameProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [nearViewport, setNearViewport] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [cached, setCached] = useState(false);
+  const qtKey = quadtreeFor(src ?? qtSrc);
 
   useEffect(() => {
-    if (imgRef.current?.complete && imgRef.current.naturalWidth > 0) setImgLoaded(true);
+    if (imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+      setImgLoaded(true);
+      setCached(true);
+    }
   }, [src]);
 
   useEffect(() => {
@@ -99,13 +109,21 @@ export default function MediaFrame({
           className="absolute inset-0 -z-10 size-full object-cover"
         />
       )}
-      {/* Shimmer covers progressive decode, then fades away */}
-      <div
-        className={clsx(
-          "pointer-events-none absolute inset-0 z-20 animate-shimmer transition-opacity duration-500 ease-out",
-          hasMedia && ready ? "opacity-0" : "opacity-100",
-        )}
-      />
+      {qtKey && !cached ? (
+        <QuadtreeLoader
+          qtKey={qtKey}
+          active={hasMedia}
+          loaded={hasMedia && ready}
+        />
+      ) : (
+        /* Shimmer covers progressive decode, then fades away */
+        <div
+          className={clsx(
+            "pointer-events-none absolute inset-0 z-20 animate-shimmer transition-opacity duration-500 ease-out",
+            hasMedia && ready ? "opacity-0" : "opacity-100",
+          )}
+        />
+      )}
       {!hasMedia && placeholderLabel && (
         <p className="absolute inset-0 z-30 flex items-center justify-center t-caption text-zinc-400">
           {placeholderLabel}

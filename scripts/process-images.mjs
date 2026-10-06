@@ -8,7 +8,7 @@
 // Originals stay out of git (media-src/ is ignored); the optimized WebP files and the manifest are committed.
 // When media-src/ is missing (e.g. on CI) the script leaves existing output untouched.
 import { existsSync, statSync } from "node:fs";
-import { copyFile, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -24,6 +24,11 @@ const CARD_WIDTH = 720; // grid-thumbnail width (2x a ~354px masonry column)
 // Collections shown in wider grids need bigger cards (2x a ~540px two-column cell).
 const CARD_WIDTH_FOR = { photography: 1080 };
 const CARD_QUALITY = 85;
+// Quadtree loading placeholders (played by src/components/shared/QuadtreeLoader.tsx)
+const QUADTREES = "src/content/quadtrees.generated.json";
+const QT_DEPTH = 4; // root square → up to 16×16 cells
+const QT_SPLIT = 20; // split a cell when its colour spread (std-dev, 0–255) is above this
+const B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
 if (!SRC_ROOTS.some((r) => existsSync(r))) {
   console.log(`process-images: no media-src/ folders, keeping existing ${MANIFEST}`);
@@ -36,6 +41,67 @@ const manifest = {};
 let written = 0;
 let skipped = 0;
 
+// ── Quadtrees ───────────────────────────────────────────────────────────────
+// Each image gets a tiny colour quadtree: the frame is cut into 1–6 big squares, and each square
+// splits into four wherever it has detail, up to QT_DEPTH levels. Encoded as one short string:
+//   "<cols><rows>" + per square, pre-order: "." = split into 4 (TL TR BL BR), else a 2-char 12-bit colour.
+// The site plays it coarse → fine while the real image downloads.
+const qtKey = (src) => src.replace(/(\.card)?\.(webp|gif)$/, "");
+const oldQuadtrees = existsSync(QUADTREES) ? JSON.parse(await readFile(QUADTREES, "utf8")) : {};
+const quadtrees = {};
+let qtMade = 0;
+
+async function quadtree(file) {
+  const meta = await sharp(file).metadata();
+  const aspect = meta.width / (meta.pageHeight ?? meta.height);
+  const cols = aspect >= 1 ? Math.min(6, Math.max(1, Math.round(aspect))) : 1;
+  const rows = aspect < 1 ? Math.min(6, Math.max(1, Math.round(1 / aspect))) : 1;
+  const n = 2 ** QT_DEPTH;
+  const W = cols * n;
+  const data = await sharp(file, { limitInputPixels: false })
+    .flatten({ background: "#ffffff" })
+    .resize(W, rows * n, { fit: "fill" })
+    .raw()
+    .toBuffer();
+
+  const node = (x, y, size, depth) => {
+    const sum = [0, 0, 0];
+    const sq = [0, 0, 0];
+    for (let j = y; j < y + size; j++)
+      for (let i = x; i < x + size; i++)
+        for (let c = 0; c < 3; c++) {
+          const v = data[(j * W + i) * 3 + c];
+          sum[c] += v;
+          sq[c] += v * v;
+        }
+    const count = size * size;
+    const mean = sum.map((v) => v / count);
+    const spread = Math.sqrt(sq.reduce((a, v, c) => a + v / count - mean[c] ** 2, 0) / 3);
+    if (depth < QT_DEPTH && spread > QT_SPLIT) {
+      const h = size / 2;
+      return "." + node(x, y, h, depth + 1) + node(x + h, y, h, depth + 1) + node(x, y + h, h, depth + 1) + node(x + h, y + h, h, depth + 1);
+    }
+    const [r, g, b] = mean.map((v) => Math.round(v / 17));
+    const v = (r << 8) | (g << 4) | b;
+    return B64[v >> 6] + B64[v & 63];
+  };
+
+  let out = `${cols}${rows}`;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) out += node(c * n, r * n, n, 0);
+  return out;
+}
+
+/** Reuse last run's quadtree unless the image was just rewritten. */
+async function addQuadtree(item, outDir, rewritten) {
+  const key = qtKey(item.src);
+  if (!rewritten && oldQuadtrees[key]) quadtrees[key] = oldQuadtrees[key];
+  else {
+    // The light card copy is quicker to read and has the same colours.
+    quadtrees[key] = await quadtree(path.join(outDir, path.basename(item.card ?? item.src)));
+    qtMade++;
+  }
+}
+
 /** Rebuild a manifest entry from already-processed files (used when the originals aren't on this machine). */
 async function entryFromOutput(slug) {
   const outDir = path.join(OUT, slug);
@@ -47,6 +113,7 @@ async function entryFromOutput(slug) {
     const item = { src: `/projects/${slug}/${f}`, width: meta.width, height: meta.pageHeight ?? meta.height };
     const card = `${path.parse(f).name}.card.webp`;
     if (all.includes(card)) item.card = `/projects/${slug}/${card}`;
+    await addQuadtree(item, outDir, false);
     if (path.parse(f).name === "cover") entry.cover = item;
     else entry.images.push(item);
   }
@@ -109,7 +176,8 @@ for (const slug of [...slugs].sort(natural.compare)) {
 
     // Skip work when the outputs are newer than the source.
     const isFresh = (p) => !p || (existsSync(p) && statSync(p).mtimeMs >= srcStat.mtimeMs);
-    if (!isFresh(outPath) || !isFresh(cardPath)) {
+    const rewrite = !isFresh(outPath) || !isFresh(cardPath);
+    if (rewrite) {
       if (isGif && !bigGif) {
         await copyFile(srcPath, outPath);
       } else {
@@ -137,6 +205,7 @@ for (const slug of [...slugs].sort(natural.compare)) {
     const height = meta.pageHeight ?? meta.height;
     const item = { src: `/projects/${slug}/${outName}`, width, height };
     if (cardName) item.card = `/projects/${slug}/${cardName}`;
+    await addQuadtree(item, outDir, rewrite);
     if (base === "cover") entry.cover = item;
     else entry.images.push(item);
   }
@@ -149,7 +218,8 @@ for (const slug of [...slugs].sort(natural.compare)) {
 }
 
 await writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + "\n");
+await writeFile(QUADTREES, JSON.stringify(quadtrees) + "\n");
 const counts = Object.entries(manifest)
   .map(([s, e]) => `${s}: ${e.images.length}${e.cover ? " + cover" : ""}`)
   .join(", ");
-console.log(`process-images: ${written} written, ${skipped} unchanged → ${counts || "nothing"}`);
+console.log(`process-images: ${written} written, ${skipped} unchanged, ${qtMade} quadtrees made →${counts || "nothing"}`);

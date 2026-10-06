@@ -52,6 +52,7 @@ function PieceCard({ piece, onOpen, loaded = true }: { piece: PlayPiece; onOpen:
         {/* Until a deferred section is ready, only the sized shimmer box renders (no download). */}
         <MediaFrame
           src={loaded ? piece.src : undefined}
+          qtSrc={piece.src}
           alt={piece.alt ?? piece.title}
           aspect={String(piece.aspect ?? 0.8)}
           rounded="rounded-2xl"

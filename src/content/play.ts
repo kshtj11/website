@@ -144,11 +144,6 @@ const allPlayGroups: PlayGroup[] = [
       },
     ],
   },
-  {
-    id: "fun",
-    label: "Fun",
-    sections: [{ id: "fun", status: "draft", label: "Fun", header: "ruled", pieces: placeholders(6, "Doodle") }],
-  },
 ];
 
 /** Groups with draft sections removed (on the live site); empty groups disappear. */

@@ -125,7 +125,7 @@ Group     sidebar heading            "Experiments"   (expands while one of its s
     Piece   image + caption          opens a lightbox on click
 ```
 
-- Defined in `src/content/play.ts`. A group with one same-named section shows as a single sidebar item ("Fun").
+- Defined in `src/content/play.ts`. A group with one same-named section shows as a single sidebar item ("Sketchbook").
 - Layout: 202px sticky sidebar + 16px gap + content column; sections 48px apart; header → gallery 12px.
 - Gallery: 3-column CSS masonry at ≥1024px (16px gutters), 2-column grid below. The sidebar is hidden under 1024px.
 - Section headers: `plain` (inset label) or `ruled` (label + hairline), with an optional right-aligned action link (e.g. "Case study ↗" → `/play/<slug>/`).
